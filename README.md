@@ -1,3 +1,3 @@
-## Patpat-Viewer: A result viewer for Patpat
+## Patpat-viewer: A result viewer for Patpat
 
 ### Under Development...
