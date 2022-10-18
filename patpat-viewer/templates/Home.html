@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Patpat{% endblock %}
+
+
+{% block content %}
+
+<div class="container p-5">
+    <table style="margin:0 auto">
+        <tr>
+            <th>
+                <div style="font-style: normal;font-weight: bold;font-size: 32px;line-height: 39px;
+                            display: flex;align-items: center;text-align: center;
+                            color: #000000;">
+                    Welcome to Patpat
+                </div>
+                <div style="width: 500px;height: 100px;
+                            font-style: normal;font-weight: 400;font-size: 24px;line-height: 29px;
+                            color: #000000;">
+                    Type in the UniProt identifier to find the proteomics dataset that matches your interest.
+                </div>
+                <div style="text-align: center">
+                    <p>
+                        <a class="btn btn-dark btn-lg"
+                           href="/taskbar" role="button">View</a>
+                    </p>
+                </div>
+            </th>
+            <th>
+                <div style="width: 480px;height: 480px;background: #5278FF;
+                        line-height: 480px;text-align: center;color: #FFFFFF;">
+                    fig.
+                </div>
+            </th>
+        </tr>
+    </table>
+</div>
+
+{% endblock %}
+
+
+

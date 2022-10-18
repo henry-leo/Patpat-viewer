@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Patpat{% endblock %}
+
+
+<script>
+    function stop() {
+        document.getElementById('bbb').style.display = "none";
+    }
+</script>
+
+{% block content %}
+<div class="row p-5">
+    <div class="col-3">
+        <div class="container p-5">
+            <div class="d-grid gap-5">
+                <a class="btn btn-outline-secondary fs-4"
+                   href="/search" role="button">
+
+                    <b>Easy Search</b>
+                </a>
+                <a class="btn btn-outline-secondary fs-4"
+                   href="/search/advantage" role="button">
+                    <b>Advanced Search</b>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6">
+        <div class="container p-5 border">
+            <div class="d-grid gap-5">
+                <h2><b>Easy Search</b></h2>
+                <form method="POST">
+                    <div class="d-grid gap-3">
+
+                        <div class="mx-auto">
+                            <label>Protein UniProt Identifier:
+                                <input class="form-control form-control-lg" type="text"
+                                       name="identifier" placeholder="e.g. C0H3P8"
+                                       pattern="[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}"
+                                       required>
+                            </label>
+                        </div>
+
+                        <div class="mx-auto">
+                            <button type="submit" class="btn btn-dark btn-lg" onclick="stop()" id="bbb">
+                                <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+                                Search
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+                <div class="col-md-5 offset-md-8">
+                    <div class="d-grid gap-1">
+                        <a class="text-decoration-none"
+                           href="http://www.uniprot.org/help/about" target="_blank">What is UniProt?</a>
+                        <a class="text-decoration-none"
+                           href="http://www.uniprot.org/" target="_blank">Find the protein of interest.</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+

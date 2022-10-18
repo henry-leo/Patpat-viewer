@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Patpat{% endblock %}
+
+{% block content %}
+{% import 'macro.html' as macros with context %}
+
+
+<div class="grid p-5">
+
+    <div class="row row-cols-5 border-bottom bg-dark text-white">
+        <div class="col"><b>Start Time</b></div>
+        <div class="col"><b>Identifier</b></div>
+        <div class="col"><b>Gene</b></div>
+        <div class="col"><b>Status</b></div>
+        <div class="col text-warning"><b>Click!</b></div>
+    </div>
+
+    {% for config in configs %}
+    {{ macros.task_entry(config) }}
+    {% endfor %}
+
+</div>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+
+        {% if page != 1 %}
+        <li class="page-item"><a class="page-link text-black" href="/taskbar?p{{ page-1 }}">Previous</a></li>
+        {% else %}
+        <li class="page-item"><a class="page-link text-black" href="/taskbar?p1">Previous</a></li>
+        {% endif %}
+
+        {% for p in pagination_num %}
+        <li class="page-item"><a class="page-link text-black" href="/taskbar?p{{ p }}">{{ p }}</a></li>
+        {% endfor %}
+
+        {% if page != pagination_num[-1] %}
+        <li class="page-item"><a class="page-link text-black" href="/taskbar?p{{ page+1 }}">Next</a></li>
+        {% else %}
+        <li class="page-item"><a class="page-link text-black" href="/taskbar?p{{ pagination_num[-1] }}">Next</a></li>
+        {% endif %}
+
+    </ul>
+</nav>
+
+
+{% endblock %}

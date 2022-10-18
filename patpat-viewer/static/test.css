@@ -1,0 +1,131 @@
+
+#d1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    gap: 10px;
+}
+
+#d2 {
+    width: 1064px;
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+#index {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    gap: 30px;
+
+    position: absolute;
+    width: 1064px;
+    height: 100px;
+    left: 0px;
+    top: 0px;
+
+    background: #FFFBFB;
+}
+
+#index-logo {
+    width: 500px;
+    height: 100px;
+    background: #5278FF;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 27px;
+    display: flex;
+    align-items: center;
+
+    color: #FFFFFF;
+}
+
+.index-bottom {
+    width: 101px;
+    height: 54px;
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 27px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #000000;
+}
+
+#home {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px 10px;
+    gap: 40px;
+
+    position: absolute;
+    width: 980px;
+    height: 520px;
+    left: 42px;
+    top: 150px;
+
+    background: #FFFFFF;
+}
+
+#home-core-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    gap: 20px;
+
+    width: 440px;
+    height: 279px;
+
+    background: #FFF9F9;
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+#home-fig {
+    width: 480px;
+    height: 480px;
+
+    background: #5278FF;
+
+    line-height: 480px;
+    text-align: center;
+    color: #FFFFFF;
+
+}
+
+#major-partners {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    gap: 40px;
+
+    position: absolute;
+    width: 700px;
+    height: 140px;
+    left: 182px;
+    top: 700px;
+
+    background: #CFCFCF;
+}
