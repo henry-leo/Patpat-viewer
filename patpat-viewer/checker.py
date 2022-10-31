@@ -13,10 +13,11 @@ class Checker:
 class PRIDEChecker(Checker):
     def __init__(self, task):
         self.task = task
+        self.data = None
 
     def get_data(self):
         try:
-            utility.get_result_from_file(self.task)
+            self.data = utility.get_result_from_file(self.task)
         except FileNotFoundError:
             print('Please check task uuid')
 
