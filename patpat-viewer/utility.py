@@ -12,8 +12,11 @@ def group_list(input_list, n):
 def get_result_from_file(task=None):
     """Get Patpat search result from patpat_env/result/<task>/result.json
 
-    :param task: uuid
-    :return: dict, project metadata
+    Args:
+        task: uuid
+
+    Returns:
+        dict, project metadata
     """
     if task:
         with open(f'patpat_env/result/{task}/result.json') as f:
