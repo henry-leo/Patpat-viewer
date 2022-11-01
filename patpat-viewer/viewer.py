@@ -25,7 +25,7 @@ import re
 from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap5
 
-import utility
+from . import utility
 
 
 def create_app(name=__name__):

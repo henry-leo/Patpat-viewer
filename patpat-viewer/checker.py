@@ -1,8 +1,9 @@
 """用于数据准入
 只有通过 checker，原始数据才能进入patpat-viewer
 """
-import utility
 import time
+
+from . import utility
 
 
 class Checker:
