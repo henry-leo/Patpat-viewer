@@ -6,6 +6,8 @@
 
     import patpat-viewer.checker as checker
 
+    uuid = '3d5b4e1d-937c-4661-83a2-b6ed7c19f060'
+
     data = checker.Checker(uuid)
     data.get([checker.PRIDEChecker()])
 """
