@@ -6,7 +6,7 @@
 
     import patpat-viewer.checker as checker
 
-    data = checker.SourceChecker(uuid)
+    data = checker.Checker(uuid)
     data.get([checker.PRIDEChecker()])
 """
 import utility
@@ -14,7 +14,7 @@ import time
 import uuid
 
 
-class SourceChecker:
+class Checker:
     def __init__(self, task: str):
         try:
             uuid.UUID(task)
@@ -60,7 +60,7 @@ class SourceChecker:
         return self.data_checked
 
 
-class Checker:
+class GenericChecker:
     """基类
     self.source 是必要的变量
     """
@@ -75,7 +75,7 @@ class Checker:
         raise NotImplementedError
 
 
-class PRIDEChecker(Checker):
+class PRIDEChecker(GenericChecker):
     """"""
 
     def __init__(self):
@@ -168,6 +168,6 @@ class PRIDEChecker(Checker):
                 print(f"{d['accession']} no authors")
 
 
-class IPROXChecker(Checker):
+class IPROXChecker(GenericChecker):
     """"""
     pass
