@@ -1,5 +1,13 @@
 """用于数据准入
 只有通过 checker，原始数据才能进入patpat-viewer
+
+    Typical usage example:
+    典型用法示例：
+
+    import patpat-viewer.checker as checker
+
+    data = checker.SourceChecker(uuid)
+    data.get([checker.PRIDEChecker()])
 """
 import utility
 import time
