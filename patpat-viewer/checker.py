@@ -1,36 +1,83 @@
 """用于数据准入
 只有通过 checker，原始数据才能进入patpat-viewer
 """
+import utility
 import time
+import uuid
 
-from . import utility
+
+class SourceChecker:
+    def __init__(self, task: str):
+        try:
+            uuid.UUID(task)
+        except ValueError:
+            print('Please check uuid.')
+        else:
+            self.task = task
+            self.data_origin = dict()
+            self.data_checked = dict()
+            self.source = []
+            self.load()
+            self.check()
+
+    def load(self):
+        try:
+            self.data_origin = utility.get_result_from_file(self.task)
+        except FileNotFoundError:
+            print('Please check task uuid.')
+
+    def check(self):
+        if self.data_origin:
+            pass
+        else:
+            raise ValueError('Please call GenericChecker().load() first.')
+
+        for s in self.data_origin.keys():
+            if self.data_origin[s]:
+                self.source.extend([s])
+
+    def get(self, checkers: list):
+        """"""
+        data_checked = dict()
+        for checker in checkers:
+            if checker.source in self.source:
+                checker.load(self.data_origin)
+                checker.check()
+                data_checked.update(checker.get())
+            else:
+                continue
+
+        for n, d in enumerate(data_checked.values()):
+            self.data_checked.update({f'PAT{str(n).zfill(4)}': d})
+        return self.data_checked
 
 
 class Checker:
-    """基类"""
-
-    def get(self):
+    """基类
+    self.source 是必要的变量
+    """
+    def load(self, data):
         """"""
         raise NotImplementedError
 
     def check(self):
         raise NotImplementedError
 
+    def get(self):
+        raise NotImplementedError
+
 
 class PRIDEChecker(Checker):
     """"""
 
-    def __init__(self, task: str):
-        self.task = task
+    def __init__(self):
+        self.source = 'PRIDE'
         self.data_origin = None
         self.data_checked = None
 
-    def get(self):
+    def load(self, data):
         """"""
-        try:
-            self.data_origin = utility.get_result_from_file(self.task)['PRIDE']
-        except FileNotFoundError:
-            print('Please check task uuid.')
+        self.data_origin = data[self.source]
 
     def check(self):
         """"""
@@ -44,8 +91,11 @@ class PRIDEChecker(Checker):
                 'database': 'PRIDE',
                 'identifier': data_origin[idr]['accession'],
                 'time': data_origin[idr]['submissionDate'],
-                'authors': [n['name'] for n in data_origin[idr]['submitters']] +
-                           [n['name'] for n in data_origin[idr]['labPIs']],
+                'authors': set(
+                    [n['name'] for n in data_origin[idr]['submitters']] +
+                    [n['name'] for n in data_origin[idr]['labPIs']]
+                ),
+
                 'keywords': data_origin[idr]['keywords'],
                 # patpat ref
                 'summary': data_origin[idr]['summary'],
@@ -55,11 +105,15 @@ class PRIDEChecker(Checker):
             }
         self.data_checked = data_checked
 
+    def get(self):
+        if self.data_checked:
+            return self.data_checked
+
     def _precheck(self):
         if self.data_origin:
             data_origin = self.data_origin.copy()
         else:
-            raise FileExistsError('No data. Please call PRIDEChecker.get().')
+            raise FileExistsError('No data. Please call PRIDEChecker.load().')
 
         for data in data_origin.values():
             self._check_title(data)
