@@ -5,64 +5,18 @@
     典型用法示例：
 
     import patpat-viewer.checker as checker
+    import patpat-viewer.finisher as finisher
 
     uuid = '3d5b4e1d-937c-4661-83a2-b6ed7c19f060'
 
-    data = checker.Checker(uuid)
-    data.get([checker.PRIDEChecker()])
+    data = finisher.SourceFinisher(uuid)
+    data.run([checker.PRIDEChecker()])
 """
-import utility
+
 import time
-import uuid
 
 
 class Checker:
-    def __init__(self, task: str):
-        try:
-            uuid.UUID(task)
-        except ValueError:
-            print('Please check uuid.')
-        else:
-            self.task = task
-            self.data_origin = dict()
-            self.data_checked = dict()
-            self.source = []
-            self.load()
-            self.check()
-
-    def load(self):
-        try:
-            self.data_origin = utility.get_result_from_file(self.task)
-        except FileNotFoundError:
-            print('Please check task uuid.')
-
-    def check(self):
-        if self.data_origin:
-            pass
-        else:
-            raise ValueError('Please call GenericChecker().load() first.')
-
-        for s in self.data_origin.keys():
-            if self.data_origin[s]:
-                self.source.extend([s])
-
-    def get(self, checkers: list):
-        """"""
-        data_checked = dict()
-        for checker in checkers:
-            if checker.source in self.source:
-                checker.load(self.data_origin)
-                checker.check()
-                data_checked.update(checker.get())
-            else:
-                continue
-
-        for n, d in enumerate(data_checked.values()):
-            self.data_checked.update({f'PAT{str(n).zfill(4)}': d})
-        return self.data_checked
-
-
-class GenericChecker:
     """基类
     self.source 是必要的变量
     """
@@ -77,7 +31,7 @@ class GenericChecker:
         raise NotImplementedError
 
 
-class PRIDEChecker(GenericChecker):
+class PRIDEChecker(Checker):
     """"""
 
     def __init__(self):
@@ -170,6 +124,6 @@ class PRIDEChecker(GenericChecker):
                 print(f"{d['accession']} no authors")
 
 
-class IPROXChecker(GenericChecker):
+class IPROXChecker(Checker):
     """"""
     pass
