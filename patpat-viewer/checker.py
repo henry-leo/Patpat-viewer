@@ -56,8 +56,8 @@ class PRIDEChecker(Checker):
                 'identifier': data_origin[idr]['accession'],
                 'time': data_origin[idr]['submissionDate'],
                 'authors': set(
-                    [n['name'] for n in data_origin[idr]['submitters']] +
-                    [n['name'] for n in data_origin[idr]['labPIs']]
+                    [n['name'].upper().capitalize() for n in data_origin[idr]['submitters']] +
+                    [n['name'].upper().capitalize() for n in data_origin[idr]['labPIs']]
                 ),
 
                 'keywords': data_origin[idr]['keywords'],
