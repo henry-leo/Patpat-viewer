@@ -64,11 +64,11 @@ def search():
 @patpat_viewer.route('/taskbar', methods=['GET', 'POST'])
 def taskbar():
     try:
-        with open('../patpat_env/logs/tasks.json', mode='r') as f:
+        with open('./patpat_env/logs/tasks.json', mode='r') as f:
             configs = json.loads(f.readline())
         f.close()
     except FileNotFoundError:
-        with open('../patpat_env/logs/tasks.json', mode='w') as f:
+        with open('./patpat_env/logs/tasks.json', mode='w') as f:
             pass
         f.close()
 
