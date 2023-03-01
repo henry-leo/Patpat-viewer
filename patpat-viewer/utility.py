@@ -19,7 +19,7 @@ def get_result_from_file(task=None):
         dict, project metadata
     """
     if task:
-        with open(f'patpat_env/result/{task}/result.json') as f:
+        with open(f'../patpat_env/result/{task}/result.json') as f:
             data_json = ''.join(f.readlines())
             data_dict = json.loads(data_json)
         f.close()

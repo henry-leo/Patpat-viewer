@@ -1,13 +1,14 @@
-"""
-分页
+"""数据导入和分页处理器
 """
 import uuid
 
 import utility
+import checker
 
 
 class SourceFinisher:
     """导入并检查数据"""
+
     def __init__(self, task: str):
         try:
             uuid.UUID(task)
@@ -46,19 +47,19 @@ class SourceFinisher:
         data_checked = dict()
 
         if not checkers:
+            checkers = [c() for c in checker.Checker.__subclasses__()]
+        else:
             pass
 
-        else:
-            for checker in checkers:
-                if checker.source in self.source:
-                    checker.load(self.data_origin)
-                    checker.check()
-                    data_checked.update(checker.get())
-                else:
-                    continue
+        for checker_ in checkers:
+            if checker_.source in self.source:
+                checker_.load(self.data_origin)
+                checker_.check()
+                data_checked.update(checker_.get())
+            else:
+                continue
 
         # 添加Patpat识别符
         for n, d in enumerate(data_checked.values()):
             self.data_checked.update({f'PAT{str(n).zfill(4)}': d})
         return self.data_checked
-

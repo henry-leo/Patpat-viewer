@@ -20,6 +20,12 @@ class Checker:
     """基类
     self.source 是必要的变量
     """
+
+    def __init__(self):
+        self.source = None
+        self.data_origin = None
+        self.data_checked = None
+
     def load(self, data):
         """"""
         raise NotImplementedError
@@ -35,8 +41,8 @@ class PRIDEChecker(Checker):
     """PRIDE数据库搜索结果检查器
 
     """
-
     def __init__(self):
+        super().__init__()
         self.source = 'PRIDE'
         self.data_origin = None
         self.data_checked = None
@@ -132,6 +138,7 @@ class IPROXChecker(Checker):
     """
 
     def __init__(self):
+        super().__init__()
         self.source = 'iProX'
         self.data_origin = None
         self.data_checked = None
@@ -221,11 +228,13 @@ class IPROXChecker(Checker):
                 print(f"{d['accession']['value']} no authors")
 
 
+"""
 class MASSIVEChecker(Checker):
-    """MassIVE数据库搜索结果检查器 **BETA**
+    # MassIVE数据库搜索结果检查器 **BETA**
 
-    """
+    
     def __init__(self):
+        super().__init__()
         self.source = 'MassIVE'
         self.data_origin = None
         self.data_checked = None
@@ -239,3 +248,4 @@ class MASSIVEChecker(Checker):
 
     def get(self):
         raise NotImplementedError
+"""
