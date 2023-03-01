@@ -32,7 +32,9 @@ class Checker:
 
 
 class PRIDEChecker(Checker):
-    """"""
+    """PRIDE数据库搜索结果检查器
+
+    """
 
     def __init__(self):
         self.source = 'PRIDE'
@@ -116,7 +118,7 @@ class PRIDEChecker(Checker):
             a1 = [n['name'] for n in d['submitters']]
             a2 = [n['name'] for n in d['labPIs']]
         except KeyError:
-            print(f"{d['accession']} title has some issues. show: {d['submitters']}, d['labPIs']")
+            print(f"{d['accession']} title has some issues. show: {d['submitters'], d['labPIs']}")
         else:
             if a1 or a2:
                 pass
@@ -125,8 +127,9 @@ class PRIDEChecker(Checker):
 
 
 class IPROXChecker(Checker):
-    """"""
+    """iProX数据库搜索结果检查器
 
+    """
 
     def __init__(self):
         self.source = 'iProX'
@@ -147,11 +150,11 @@ class IPROXChecker(Checker):
                 # database ref
                 'title': data_origin[idr]['title'],
                 'database': 'iProX',
-                'identifier': data_origin[idr]['accession'].accession['accession'],
-                # 'time': " ",
-                'authors': [m['name'] for m in n['contactProperties'] for n in data_origin[idr]['contacts']]
-                ,
-
+                'identifier': data_origin[idr]['accession']['value'],
+                'time': None,
+                'authors': [j['contactProperties'][1]['value'] for j in
+                            [i for i in data_origin[idr]['contacts']]
+                            if j['contactProperties'][1]['name'] == 'contact name'],
                 'keywords': data_origin[idr]['keywords'],
                 # patpat ref
                 'summary': data_origin[idr]['summary'],
@@ -173,7 +176,7 @@ class IPROXChecker(Checker):
 
         for data in data_origin.values():
             self._check_title(data)
-            self._check_time(data)
+            # self._check_time(data)
             self._check_authors(data)
 
         return data_origin
@@ -205,14 +208,34 @@ class IPROXChecker(Checker):
     def _check_authors(self, data: dict):
         d = data.copy()
         try:
-            a1 = [n['name'] for n in d['submitters']]
-            a2 = [n['name'] for n in d['labPIs']]
+            a1 = [n['contactProperties'] for n in d['contacts']]
+            authors = []
+            for n in a1:
+                authors.extend([n[1]['value']])
         except KeyError:
-            print(f"{d['accession']} title has some issues. show: {d['submitters']}, d['labPIs']")
+            print(f"{d['accession']['value']} title has some issues. show: {d['contacts']}")
         else:
-            if a1 or a2:
+            if authors:
                 pass
             else:
-                print(f"{d['accession']} no authors")
+                print(f"{d['accession']['value']} no authors")
 
-    pass
+
+class MASSIVEChecker(Checker):
+    """MassIVE数据库搜索结果检查器 **BETA**
+
+    """
+    def __init__(self):
+        self.source = 'MassIVE'
+        self.data_origin = None
+        self.data_checked = None
+
+    def load(self, data):
+        """"""
+        raise NotImplementedError
+
+    def check(self):
+        raise NotImplementedError
+
+    def get(self):
+        raise NotImplementedError

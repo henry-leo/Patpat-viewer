@@ -1,0 +1,13 @@
+2022-12-04 16:16:26,832	INFO	mapper	mapping	Select MassIVE to search.
+2022-12-04 16:16:26,832	INFO	mapper	mapping2peptides	Find 8 peptides all.
+2022-12-04 16:16:27,316	INFO	mapper	mapping2peptides	Peptide AALFVAPCLILIK no request.
+2022-12-04 16:16:27,743	INFO	mapper	mapping2peptides	Peptide AALFVAPCLILIKCR no request.
+2022-12-04 16:16:28,179	INFO	mapper	mapping2peptides	Peptide AFNTCIAHICVFLEFYLLAFFSFFTHR no request.
+2022-12-04 16:16:28,633	INFO	mapper	mapping2peptides	Peptide LKAFNTCIAHICVFLEFYLLAFFSFFTHR no request.
+2022-12-04 16:16:29,113	INFO	mapper	mapping2peptides	Peptide LLTQIGVGVTLRAALFVAPCLILIK no request.
+2022-12-04 16:16:29,594	INFO	mapper	mapping2peptides	Peptide SLHEPMYLFLAMLGATDIAISTCILPK no request.
+2022-12-04 16:16:30,053	INFO	mapper	mapping2peptides	Peptide VERSLHEPMYLFLAMLGATDIAISTCILPK no request.
+2022-12-04 16:16:30,504	INFO	mapper	mapping2peptides	Peptide YVAICDPLRHASIFTQR no request.
+2022-12-04 16:16:31,238	INFO	retriever	retrieve	query:E9PV96
+2022-12-04 16:16:31,238	INFO	mapper	mapping2project	Mapping to project...
+2022-12-04 16:16:31,238	INFO	mapper	mapping2project	MassIVE mapping completed.
