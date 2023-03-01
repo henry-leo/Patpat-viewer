@@ -41,6 +41,7 @@ class PRIDEChecker(Checker):
     """PRIDE数据库搜索结果检查器
 
     """
+
     def __init__(self):
         super().__init__()
         self.source = 'PRIDE'
@@ -124,7 +125,7 @@ class PRIDEChecker(Checker):
             a1 = [n['name'] for n in d['submitters']]
             a2 = [n['name'] for n in d['labPIs']]
         except KeyError:
-            print(f"{d['accession']} title has some issues. show: {d['submitters'], d['labPIs']}")
+            print(f"{d['accession']} has some issues. show: {d['submitters'], d['labPIs']}")
         else:
             if a1 or a2:
                 pass
@@ -159,9 +160,9 @@ class IPROXChecker(Checker):
                 'database': 'iProX',
                 'identifier': data_origin[idr]['accession']['value'],
                 'time': None,
-                'authors': [j['contactProperties'][1]['value'] for j in
-                            [i for i in data_origin[idr]['contacts']]
-                            if j['contactProperties'][1]['name'] == 'contact name'],
+                'authors': set([j['contactProperties'][1]['value'] for j in
+                                [i for i in data_origin[idr]['contacts']]
+                                if j['contactProperties'][1]['name'] == 'contact name']),
                 'keywords': data_origin[idr]['keywords'],
                 # patpat ref
                 'summary': data_origin[idr]['summary'],
@@ -228,11 +229,9 @@ class IPROXChecker(Checker):
                 print(f"{d['accession']['value']} no authors")
 
 
-"""
 class MASSIVEChecker(Checker):
     # MassIVE数据库搜索结果检查器 **BETA**
 
-    
     def __init__(self):
         super().__init__()
         self.source = 'MassIVE'
@@ -241,11 +240,113 @@ class MASSIVEChecker(Checker):
 
     def load(self, data):
         """"""
-        raise NotImplementedError
+        self.data_origin = data[self.source]
 
     def check(self):
-        raise NotImplementedError
+        """"""
+        data_checked = dict()
+        data_origin = self._precheck()
+
+        for idr in data_origin.keys():
+            data_checked[idr] = {
+                # database ref
+                'title': data_origin[idr]['title'],
+                'database': 'MassIVE',
+                'identifier': f"{data_origin[idr]['MASSIVE']['dataset_name']}/"
+                              f"{data_origin[idr]['MASSIVE']['origin_identifier']}",
+                'time': self.refine_time(data_origin[idr]['MASSIVE']['create_time']),
+                'authors': set([i[1]['value'] for i in data_origin[idr]['PROXI']['contacts']
+                                if i[1]['name']
+                                ]),
+                'keywords': data_origin[idr]['MASSIVE']['keywords'],
+                # patpat ref
+                'summary': data_origin[idr]['summary'],
+                'website': data_origin[idr]['website'],
+                'protein': self.find_targets(data_origin[idr]['MASSIVE']['target'], 'protein'),
+                'peptides': self.find_targets(data_origin[idr]['MASSIVE']['target'], 'peptides'),
+            }
+        self.data_checked = data_checked
 
     def get(self):
-        raise NotImplementedError
-"""
+        if self.data_checked:
+            return self.data_checked
+
+    def _precheck(self):
+        """"""
+        if self.data_origin:
+            data_origin = self.data_origin.copy()
+        else:
+            raise FileExistsError('No data. Please call PRIDEChecker.load().')
+
+        for data in data_origin.values():
+            self._check_title(data)
+            self._check_time(data)
+            self._check_authors(data)
+        return data_origin
+
+    def _check_title(self, data):
+        d = data.copy()
+        if d['title']:
+            pass
+        else:
+            print(f"{d['MASSIVE']['dataset_name']} no title")
+        if isinstance(d['title'], str):
+            pass
+        else:
+            print(f"{d['MASSIVE']['dataset_name']} title has some issues. show: {d['title']}")
+
+    def _check_time(self, data: dict):
+        d = data.copy()
+        time_ = d['MASSIVE']['create_time']
+        title = d['MASSIVE']['dataset_name']
+
+        if time_:
+            pass
+        else:
+            print(f"{title} no submissionDate")
+
+        try:
+            self.refine_time(time_)
+        except ValueError:
+            print(f"{title} submissionDate has some issues. show: {time_}")
+
+    def _check_authors(self, data: dict):
+        d = data.copy()
+        title = d['MASSIVE']['dataset_name']
+        try:
+            set([i[1]['value'] for i in d['PROXI']['contacts']
+                 if i[1]['name']
+                 ]),
+        except KeyError:
+            print(f"{title}  has some issues. show: {d['PROXI']['contacts']}")
+        else:
+            pass
+
+    @staticmethod
+    def refine_time(input_time):
+        """
+
+        Args:
+            input_time: str, origin MassIVE create_time (%Y-%m-%d %H:%M:%S.0)
+
+        Returns:
+            refined: str, refined MassIVE create_time (%Y-%m-%d)
+
+        """
+        formated = time.strptime(input_time, '%Y-%m-%d %H:%M:%S.0')
+        refined = time.strftime('%Y-%m-%d', formated)
+        return refined
+
+    @staticmethod
+    def find_targets(input_target: dict, mode: str):
+        """"""
+        if mode == 'protein':
+            try:
+                return input_target['protein']
+            except KeyError:
+                return []
+        if mode == 'peptides':
+            try:
+                return input_target['peptides']
+            except KeyError:
+                return []
