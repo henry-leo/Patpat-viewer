@@ -13,6 +13,7 @@
     data.run([checker.PRIDEChecker()])
 """
 
+import re
 import time
 
 
@@ -95,7 +96,8 @@ class PRIDEChecker(Checker):
 
         return data_origin
 
-    def _check_title(self, data: dict):
+    @staticmethod
+    def _check_title(data: dict):
         d = data.copy()
         if d['title']:
             pass
@@ -106,7 +108,8 @@ class PRIDEChecker(Checker):
         else:
             print(f"{d['accession']} title has some issues. show: {d['title']}")
 
-    def _check_time(self, data: dict):
+    @staticmethod
+    def _check_time(data: dict):
         d = data.copy()
         t = d['submissionDate']
         if t:
@@ -119,7 +122,8 @@ class PRIDEChecker(Checker):
         else:
             print(f"{d['accession']} submissionDate has some issues. show: {t}")
 
-    def _check_authors(self, data: dict):
+    @staticmethod
+    def _check_authors(data: dict):
         d = data.copy()
         try:
             a1 = [n['name'] for n in d['submitters']]
@@ -150,11 +154,11 @@ class IPROXChecker(Checker):
 
     def check(self):
         """"""
-        data_checkediProX = dict()
+        data_checked = dict()
         data_origin = self._precheck()
 
         for idr in data_origin.keys():
-            data_checkediProX[idr] = {
+            data_checked[idr] = {
                 # database ref
                 'title': data_origin[idr]['title'],
                 'database': 'iProX',
@@ -163,14 +167,14 @@ class IPROXChecker(Checker):
                 'authors': set([j['contactProperties'][1]['value'] for j in
                                 [i for i in data_origin[idr]['contacts']]
                                 if j['contactProperties'][1]['name'] == 'contact name']),
-                'keywords': data_origin[idr]['keywords'],
+                'keywords': re.split('[,;]', data_origin[idr]['keywords'][0]['value']),
                 # patpat ref
                 'summary': data_origin[idr]['summary'],
                 'website': data_origin[idr]['website'],
                 'protein': data_origin[idr]['protein'],
                 'peptides': data_origin[idr]['peptides'],
             }
-        self.data_checked = data_checkediProX
+        self.data_checked = data_checked
 
     def get(self):
         if self.data_checked:
@@ -189,7 +193,8 @@ class IPROXChecker(Checker):
 
         return data_origin
 
-    def _check_title(self, data: dict):
+    @staticmethod
+    def _check_title(data: dict):
         d = data.copy()
         if d['title']:
             pass
@@ -200,7 +205,8 @@ class IPROXChecker(Checker):
         else:
             print(f"{d['accession']} title has some issues. show: {d['title']}")
 
-    def _check_time(self, data: dict):
+    @staticmethod
+    def _check_time(data: dict):
         d = data.copy()
         t = d['submissionDate']
         if t:
@@ -213,7 +219,8 @@ class IPROXChecker(Checker):
         else:
             print(f"{d['accession']} submissionDate has some issues. show: {t}")
 
-    def _check_authors(self, data: dict):
+    @staticmethod
+    def _check_authors(data: dict):
         d = data.copy()
         try:
             a1 = [n['contactProperties'] for n in d['contacts']]
@@ -258,7 +265,7 @@ class MASSIVEChecker(Checker):
                 'authors': set([i[1]['value'] for i in data_origin[idr]['PROXI']['contacts']
                                 if i[1]['name']
                                 ]),
-                'keywords': data_origin[idr]['MASSIVE']['keywords'],
+                'keywords': re.split('[,;]', data_origin[idr]['MASSIVE']['keywords']),
                 # patpat ref
                 'summary': data_origin[idr]['summary'],
                 'website': data_origin[idr]['website'],
@@ -284,7 +291,8 @@ class MASSIVEChecker(Checker):
             self._check_authors(data)
         return data_origin
 
-    def _check_title(self, data):
+    @staticmethod
+    def _check_title(data):
         d = data.copy()
         if d['title']:
             pass
@@ -310,7 +318,8 @@ class MASSIVEChecker(Checker):
         except ValueError:
             print(f"{title} submissionDate has some issues. show: {time_}")
 
-    def _check_authors(self, data: dict):
+    @staticmethod
+    def _check_authors(data: dict):
         d = data.copy()
         title = d['MASSIVE']['dataset_name']
         try:
