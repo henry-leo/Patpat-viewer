@@ -13,6 +13,9 @@ class Filter:
                       'accession': set(),
                       'condition': dict()}
 
+    def __call__(self, given: dict):
+        raise NotImplementedError
+
     def _loading(self,
                  given: dict,
                  ):

@@ -2,12 +2,13 @@
 """
 import uuid
 
-import utility
 import checker
 import filter
+import sorter
+import utility
 
 
-class SourceFinisher:
+class ImportFinisher:
     """导入并检查数据"""
 
     def __init__(self, task: str):
@@ -66,29 +67,52 @@ class SourceFinisher:
         return self.data_checked
 
 
-class FilterFinisher:
+class FiltrateFinisher:
     """"""
     def __init__(self, datasets: dict, condition: dict):
+        self.accession_filtered = set()
+        self.datasets = datasets
+        self.condition = condition
+        self._given = {'datasets': self.datasets, 'condition': self.condition}
         self._detect()
-        self.given = {'datasets': datasets, 'condition': condition}
 
     def _detect(self):
         """检查condition是否完整"""
-        if 'start' not in self.given['condition']:
-            raise ValueError(f"please check the input {self.given['condition']}")
-        if 'end' not in self.given['condition']:
-            raise ValueError(f"please check the input {self.given['condition']}")
-        if 'databases' not in self.given['condition']:
-            raise ValueError(f"please check the input {self.given['condition']}")
-        if 'keywords' not in self.given['condition']:
-            raise ValueError(f"please check the input {self.given['condition']}")
+        if 'start' not in self._given['condition']:
+            raise ValueError(f"please check the input {self._given['condition']}")
+        if 'end' not in self._given['condition']:
+            raise ValueError(f"please check the input {self._given['condition']}")
+        if 'databases' not in self._given['condition']:
+            raise ValueError(f"please check the input {self._given['condition']}")
+        if 'keywords' not in self._given['condition']:
+            raise ValueError(f"please check the input {self._given['condition']}")
 
     def run(self):
-        """**BETA**"""
-        filters = [filter_() for filter_ in filter.Filter.__subclasses__()]
-        filter_ = filters[0]
+        """"""
+        filters = [f() for f in filter.Filter.__subclasses__()]
 
+        filter_ = dict()
+        for i in range(0, len(filters)):
+            if i == 0:
+                filter_ = filters[i](given=self._given)
+            else:
+                filter_ = filters[i](given=filter_)
+
+        self.accession_filtered = filter_['accession']
+        return filter_
 
 
 class SortFinisher:
-    pass
+    """"""
+    def __init__(self, datasets, accession, mode: str, key: {str, int}):
+        if mode == 'submit':
+            self.sorter = sorter.SubmitSorter(datasets=datasets,
+                                              accession=accession,
+                                              mode=key)
+        elif mode == 'randomize':
+            self.sorter = sorter.RandomizeSorter(datasets=datasets,
+                                                 accession=accession,
+                                                 num=key)
+
+    def run(self):
+        self.sorter.run()
