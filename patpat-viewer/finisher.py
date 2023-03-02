@@ -4,6 +4,7 @@ import uuid
 
 import utility
 import checker
+import filter
 
 
 class SourceFinisher:
@@ -63,3 +64,31 @@ class SourceFinisher:
         for n, d in enumerate(data_checked.values()):
             self.data_checked.update({f'PAT{str(n).zfill(4)}': d})
         return self.data_checked
+
+
+class FilterFinisher:
+    """"""
+    def __init__(self, datasets: dict, condition: dict):
+        self._detect()
+        self.given = {'datasets': datasets, 'condition': condition}
+
+    def _detect(self):
+        """检查condition是否完整"""
+        if 'start' not in self.given['condition']:
+            raise ValueError(f"please check the input {self.given['condition']}")
+        if 'end' not in self.given['condition']:
+            raise ValueError(f"please check the input {self.given['condition']}")
+        if 'databases' not in self.given['condition']:
+            raise ValueError(f"please check the input {self.given['condition']}")
+        if 'keywords' not in self.given['condition']:
+            raise ValueError(f"please check the input {self.given['condition']}")
+
+    def run(self):
+        """**BETA**"""
+        filters = [filter_() for filter_ in filter.Filter.__subclasses__()]
+        filter_ = filters[0]
+
+
+
+class SortFinisher:
+    pass

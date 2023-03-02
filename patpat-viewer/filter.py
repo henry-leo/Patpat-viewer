@@ -183,7 +183,7 @@ class KeywordFilter(Filter):
             given: 由其他 Filter生成的筛选结果
                 ['datasets']: dict，完整的Patpat-viewer准入数据
                 ['accession']: 可选，set，需要筛选的数据集的Patpat编号，默认为 None，意味着全部需要筛选，如：{"PAT0000","PAT0007"}
-                ['condition']: 可选，dict，筛选条件，如：{}
+                ['condition']: 可选，dict，筛选条件，如：{'keywords': ['proteomics', 'Hela Cell']}
 
         Returns:
             given: 筛选结果
