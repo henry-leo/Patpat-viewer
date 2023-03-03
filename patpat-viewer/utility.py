@@ -30,6 +30,9 @@ def get_result_from_file(task=None):
         print('Need to input task uuid.')
 
 
+def print_sorted(data, acc):
+    v = [data[i]['time'] for i in acc]
+    print(v)
 """
 def get_fake_data():
     with open('logs/tasks.json', mode='r') as f:

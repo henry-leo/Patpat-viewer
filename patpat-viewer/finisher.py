@@ -1,6 +1,8 @@
 """数据导入、排序和分页处理器
 """
+import time
 import uuid
+import json
 
 import checker
 import filter
@@ -116,3 +118,45 @@ class SortFinisher:
 
     def run(self):
         self.sorter.run()
+
+
+class PaginateFinisher:
+    """"""
+    def __init__(self, run_per_page=5):
+        self.pagination = None
+        self.config_group = list()
+        self.run_per_page = run_per_page
+
+        self._configs = dict()
+
+    def run(self):
+        self._config_precess()
+        configs_group = utility.group_list(self._configs, self.run_per_page)
+        pagination = range(1, len(configs_group) + 1)
+
+        self.config_group = configs_group
+        self.pagination = pagination
+
+        return configs_group, pagination
+
+    def _config_precess(self):
+        try:
+            with open('../patpat_env/logs/tasks.json', mode='r') as f:
+                configs = json.loads(f.readline())
+            f.close()
+        except FileNotFoundError:
+            with open('../patpat_env/logs/tasks.json', mode='w') as f:
+                pass
+            f.close()
+
+        configs = [i for i in configs['tasks'].values() if i.get('startTime')]
+        configs.sort(reverse=True, key=lambda x: x['startTime'])
+
+        for n, task_config in enumerate(configs):
+            task_config['startTime'] = time.strftime('%Y-%m-%d %H:%M:%S',
+                                                     time.localtime(task_config['startTime']))
+            if task_config['state'] == 'Running':
+                task_config['state'] = 'Error'
+            task_config['entry'] = f'Task-{n}'
+
+        self._configs = configs
