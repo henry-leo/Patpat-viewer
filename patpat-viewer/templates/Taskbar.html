@@ -26,9 +26,9 @@
     <ul class="pagination justify-content-center">
 
         {% if page != 1 %}
-        <li class="page-item"><a class="page-link text-black" href="/taskbar?p{{ page-1 }}">Previous</a></li>
+        <li class="page-item"><a class="page-link text-black" href="/taskbar?p{{ page-1 }}"><<</a></li>
         {% else %}
-        <li class="page-item"><a class="page-link text-black" href="/taskbar?p1">Previous</a></li>
+        <li class="page-item"><a class="page-link text-black" href="/taskbar?p1"><<</a></li>
         {% endif %}
 
         {% for p in pagination_num %}
@@ -36,13 +36,14 @@
         {% endfor %}
 
         {% if page != pagination_num[-1] %}
-        <li class="page-item"><a class="page-link text-black" href="/taskbar?p{{ page+1 }}">Next</a></li>
+        <li class="page-item"><a class="page-link text-black" href="/taskbar?p{{ page+1 }}">>></a></li>
         {% else %}
-        <li class="page-item"><a class="page-link text-black" href="/taskbar?p{{ pagination_num[-1] }}">Next</a></li>
+        <li class="page-item"><a class="page-link text-black" href="/taskbar?p{{ pagination_num[-1] }}">>></a></li>
         {% endif %}
 
     </ul>
 </nav>
+
 
 
 {% endblock %}
