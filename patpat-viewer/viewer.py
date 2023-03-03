@@ -25,6 +25,7 @@ import re
 from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap5
 
+import finisher
 import utility
 
 
@@ -151,7 +152,11 @@ def test():
 
 @patpat_viewer.route('/test2')
 def test2():
-    return render_template('test2.html')
+    u = '3d5b4e1d-937c-4661-83a2-b6ed7c19f060'
+    a = finisher.ImportFinisher(u).run()
+
+    return render_template('test2.html',
+                           dataset=a['PAT0001'])
 
 
 if __name__ == '__main__':

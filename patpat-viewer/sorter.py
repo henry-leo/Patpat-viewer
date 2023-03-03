@@ -41,8 +41,7 @@ class RandomizeSorter(Sorter):
     def run(self):
         try:
             accession = random.sample(self.accession, k=self._num)
-        except ValueError(f'The number of datasets are smaller than the number of samples:'
-                          f' {len(self.accession)} < {self._num}'):
+        except ValueError:
             accession = self.accession
 
         self.accession = accession

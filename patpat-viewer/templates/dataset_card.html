@@ -1,0 +1,28 @@
+{% macro dataset_card(dataset) %}
+<div class="card card-lg">
+    <div class="card-body">
+        <h4 class="card-title">
+            {{ dataset['title'] }}
+        </h4>
+        <p>
+            {% for i in dataset['authors'] %}
+            {{ i+',' }}
+            {% endfor %}
+        </p>
+        <div style="color:#2a5698">
+            <b>{{ dataset['database'] + '.' }}</b>
+            {{ dataset['time'] + '.' }}
+            {{ 'identifier: ' + dataset['identifier'] }}
+        </div>
+        <p>
+            {{ dataset['summary'] }}
+        </p>
+        <div class="justify-content-end">
+            <a href="#" class="btn btn-outline-dark px-4 ">View</a>
+        </div>
+
+        <div class="card-footer">
+            <p>Something about...</p>
+        </div>
+    </div>
+    {% endmacro %}
