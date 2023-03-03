@@ -1,28 +1,73 @@
 {% macro dataset_card(dataset) %}
 <div class="card card-lg">
     <div class="card-body">
-        <h4 class="card-title">
+        <div class="container-lg h4">
             {{ dataset['title'] }}
-        </h4>
-        <p>
-            {% for i in dataset['authors'] %}
-            {{ i+',' }}
-            {% endfor %}
-        </p>
-        <div style="color:#2a5698">
-            <b>{{ dataset['database'] + '.' }}</b>
-            {{ dataset['time'] + '.' }}
-            {{ 'identifier: ' + dataset['identifier'] }}
         </div>
-        <p>
+        <div class="container-lg">
+            <div class="col">
+                <div class="row">
+                    <div>
+                        {% for i in dataset['authors'] %}
+                        {{ i+',' }}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="row" style="color: #5f801e">
+                    <div>
+                        <b>{{ dataset['database'] }}. </b>{{ dataset['time'] }}.
+                        Accession: {{ dataset['identifier'] }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p></p>
+        <div class="container-lg"
+             style="display: -webkit-box;
+                    overflow: hidden;
+                    white-space: normal !important;
+                    text-overflow: ellipsis;
+                    word-wrap:break-word;
+                    -webkit-line-clamp:5;
+                    -webkit-box-orient: vertical">
             {{ dataset['summary'] }}
-        </p>
-        <div class="justify-content-end">
-            <a href="#" class="btn btn-outline-dark px-4 ">View</a>
         </div>
-
-        <div class="card-footer">
-            <p>Something about...</p>
+        <div class="container-lg">
+            <!-- Keywords -->
+            <div class="row">
+                <div class="col-lg-1">
+                    Keyword:
+                </div>
+                <div class="col-lg-8">
+                    {% for keyword in dataset['keywords'] %}
+                        {{ keyword }};
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="container-lg">
+            <div class="row">
+                <div class="col-lg-1">
+                    {% if dataset['protein'] %}
+                    <div class="badge bg-success">Protein Level</div>
+                    {% else %}
+                    <div class="badge bg-secondary ">Protein Level</div>
+                    {% endif %}
+                </div>
+                <div class="col-lg-1">
+                    {% if dataset['peptides'] %}
+                    <div class="badge bg-success ">Peptides Level</div>
+                    {% else %}
+                    <div class="badge bg-secondary ">Peptides Level</div>
+                    {% endif %}
+                </div>
+                <div class="col-lg-2">
+                    <abbr class="text-warning" title="Somethings">
+                        <strong>?</strong>
+                    </abbr>
+                </div>
+            </div>
         </div>
     </div>
-    {% endmacro %}
+</div>
+{% endmacro %}

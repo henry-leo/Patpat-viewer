@@ -156,7 +156,7 @@ def test2():
     a = finisher.ImportFinisher(u).run()
 
     return render_template('test2.html',
-                           dataset=a['PAT0001'])
+                           dataset=a['PAT0331'])
 
 
 if __name__ == '__main__':

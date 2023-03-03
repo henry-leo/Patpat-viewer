@@ -6,6 +6,8 @@
 {% block content %}
 {% import 'dataset_card.html' as card with context %}
 
-{{ card.dataset_card(dataset) }}
+{% for i in range(1,10) %}
+    {{ card.dataset_card(dataset) }}
+{% endfor %}
 
 {% endblock %}
