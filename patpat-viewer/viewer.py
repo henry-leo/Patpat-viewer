@@ -149,5 +149,10 @@ def test():
     return render_template('test.html')
 
 
+@patpat_viewer.route('/test2')
+def test2():
+    return render_template('test2.html')
+
+
 if __name__ == '__main__':
     patpat_viewer.run(debug=True)
