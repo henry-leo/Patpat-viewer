@@ -154,9 +154,9 @@ def test():
 def test2():
     u = '3d5b4e1d-937c-4661-83a2-b6ed7c19f060'
     a = finisher.ImportFinisher(u).run()
-
+    b = [a[i] for n, i in enumerate(a.keys()) if n < 10]
     return render_template('test2.html',
-                           dataset=a['PAT0331'])
+                           dataset=b)
 
 
 if __name__ == '__main__':
