@@ -110,8 +110,12 @@ class YearFilter(Filter):
 
     def _condition_check(self):
         """如果输入的字典格式不符合要求"""
-        if not self.given['condition']['start'] and not self.given['condition']['end']:
+        if 'start' or 'end' not in self.given['condition']:
             print(f"Filter condition are mistake: {self.given['condition']}")
+            return self.given
+
+        elif not self.given['condition']['start'] and not self.given['condition']['end']:
+            # 空筛选
             return self.given
         else:
             # 表明可以进行筛选
@@ -163,7 +167,7 @@ class DatabaseFilter(Filter):
         for d in checker.Checker.__subclasses__():
             databases.extend([d().source])
 
-        if not self.given['condition']["databases"]:
+        if "databases" not in self.given['condition']:
             print(f"Filter condition are mistake: {self.given['condition']}")
             return self.given
 
@@ -171,6 +175,10 @@ class DatabaseFilter(Filter):
             if d not in databases:
                 print(f"Filter condition are mistake: {self.given['condition']}")
                 return self.given
+
+        if not self.given['condition']["databases"]:
+            # 空筛选
+            return self.given
 
         return True
 

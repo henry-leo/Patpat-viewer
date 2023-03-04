@@ -4,10 +4,10 @@ import time
 
 
 def group_list(input_list: list, n: int):
-    g = []
+    group = []
     for i in range(0, len(input_list), n):
-        g.append(input_list[i:i + n])
-    return g
+        group.append(input_list[i:i + n])
+    return group
 
 
 def get_result_from_file(task=None):

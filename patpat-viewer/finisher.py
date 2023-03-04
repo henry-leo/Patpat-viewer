@@ -102,7 +102,7 @@ class FiltrateFinisher:
                 filter_ = filters[i](given=filter_)
 
         self.accession_filtered = filter_['accession']
-        return filter_
+        return self.accession_filtered
 
 
 class SortFinisher:
@@ -125,6 +125,7 @@ class SortFinisher:
         self.accession = self._sorter.accession
         datasets_sorted = [self._sorter.datasets[acc] for acc in self._sorter.accession]
         self.datasets_sorted = datasets_sorted
+        return self.datasets_sorted
 
 
 class PaginateFinisher:
@@ -150,4 +151,4 @@ class PaginateFinisher:
         self.groups = groups
         self.pagination = pagination
 
-        return groups, pagination
+        return self.groups

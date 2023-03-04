@@ -18,8 +18,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-import json
-import time
 import re
 
 from flask import Flask, render_template, request
@@ -63,28 +61,14 @@ def search():
 
 
 @patpat_viewer.route('/taskbar', methods=['GET', 'POST'])
-def taskbar():
-    try:
-        with open('../patpat_env/logs/tasks.json', mode='r') as f:
-            configs = json.loads(f.readline())
-        f.close()
-    except FileNotFoundError:
-        with open('../patpat_env/logs/tasks.json', mode='w') as f:
-            pass
-        f.close()
+def taskbar(pagination_num_per=5):
+    configs = utility.config_process()
 
-    pagination_num_per = 20
-
-    configs = [i for i in configs['tasks'].values() if i.get('startTime')]
-    configs.sort(reverse=True, key=lambda x: x['startTime'])
-    for n, task_config in enumerate(configs):
-        task_config['startTime'] = time.strftime('%Y-%m-%d %H:%M:%S',
-                                                 time.localtime(task_config['startTime']))
-        if task_config['state'] == 'Running':
-            task_config['state'] = 'Error'
-        task_config['entry'] = f'Task-{n}'
+    pagination_num_per = pagination_num_per
 
     configs_group = utility.group_list(configs, pagination_num_per)
+    """
+    
     pagination_num = range(1, len(configs_group) + 1)
 
     if re.search("(?<=\\?p).*", request.url):
@@ -93,45 +77,28 @@ def taskbar():
         page = 1
 
     this_page_configs = configs_group[page - 1]
-
+    """
+    this_page_data, pagination_num, page = choose_page(groups=configs_group)
     return render_template('Taskbar.html',
-                           configs=this_page_configs,
+                           configs=this_page_data,
                            pagination_num=pagination_num,
                            page=page)
 
 
-@patpat_viewer.route('/taskbar/<uuid>', methods=['GET'])
-def task(uuid=None):
-    data = []
-    with open(f'patpat_env/result/{uuid}/result.tab', mode='r', errors='ignore') as f:
-        f.readline()
-        while True:
-            d = f.readline()
-            if d:
-                data.append(re.split('\t', d))
-            else:
-                break
-
-    pagination_num_per = 20
-    group = utility.group_list(data, pagination_num_per)
-    pagination_num = range(1, len(group) + 1)
+def choose_page(groups):
+    pagination_num = range(1, len(groups) + 1)
 
     if re.search("(?<=\\?p).*", request.url):
         page = int(re.search("(?<=\\?p).*", request.url).group())
     else:
         page = 1
 
-    this_page_data = group[page - 1]
-
-    return render_template('test.html',
-                           uuid=uuid,
-                           data=this_page_data,
-                           pagination_num=pagination_num,
-                           page=page)
+    this_page_data = groups[page - 1]
+    return this_page_data, pagination_num, page
 
 
 @patpat_viewer.errorhandler(404)
-def page_not_found(e):
+def page_not_found():
     return render_template('404.html'), 404
 
 
@@ -150,9 +117,11 @@ def test():
     return render_template('test.html')
 
 
-@patpat_viewer.route('/test2/<uid>', methods=['GET'])
-def test2(uid, condition=None):
-
+@patpat_viewer.route('/Taskbar/<uid>', methods=['GET'])
+def test2(
+        uid,
+        condition=None,
+        pagination_num_per=10):
     # uid = '3d5b4e1d-937c-4661-83a2-b6ed7c19f060'
     uid = uid
     if condition is None:
@@ -162,39 +131,28 @@ def test2(uid, condition=None):
                      'keywords': [],
                      }
 
-    a = finisher.ImportFinisher(uid)
-    a.run()
+    data_imported = finisher.ImportFinisher(uid).run()
     condition = condition
 
-    b = finisher.FiltrateFinisher(
-        datasets=a.data_checked,
+    acc_filtered = finisher.FiltrateFinisher(
+        datasets=data_imported,
         condition=condition
-    )
-    b.run()
+    ).run()
 
-    c = finisher.SortFinisher(
-        datasets=a.data_checked,
-        accession=b.accession_filtered,
+    data_sorted = finisher.SortFinisher(
+        datasets=data_imported,
+        accession=acc_filtered,
         mode='submit',
-        key='previously')
-    c.run()
+        key='previously').run()
 
-    pagination_num_per = 10
-    d = finisher.PaginateFinisher(
-        data=c.datasets_sorted,
-        run_per_page=pagination_num_per)
-    d.run()
-    groups = d.groups
-    if groups:
-        pagination_num = range(1, len(groups) + 1)
+    pagination_num_per = pagination_num_per
+    data_group = finisher.PaginateFinisher(
+        data=data_sorted,
+        run_per_page=pagination_num_per).run()
 
-        if re.search("(?<=\\?p).*", request.url):
-            page = int(re.search("(?<=\\?p).*", request.url).group())
-        else:
-            page = 1
-        this_page_data = groups[page - 1]
-
-        return render_template('test2.html',
+    if data_group:
+        this_page_data, pagination_num, page = choose_page(groups=data_group)
+        return render_template('Task.html',
                                uid=uid,
                                dataset=this_page_data,
                                pagination_num=pagination_num,
