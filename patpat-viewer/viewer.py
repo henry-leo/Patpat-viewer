@@ -150,13 +150,57 @@ def test():
     return render_template('test.html')
 
 
-@patpat_viewer.route('/test2')
-def test2():
-    u = '3d5b4e1d-937c-4661-83a2-b6ed7c19f060'
-    a = finisher.ImportFinisher(u).run()
-    b = [a[i] for n, i in enumerate(a.keys()) if n < 10]
-    return render_template('test2.html',
-                           dataset=b)
+@patpat_viewer.route('/test2/<uid>', methods=['GET'])
+def test2(uid, condition=None):
+
+    # uid = '3d5b4e1d-937c-4661-83a2-b6ed7c19f060'
+    uid = uid
+    if condition is None:
+        condition = {'start': '',
+                     'end': '',
+                     'databases': [],
+                     'keywords': [],
+                     }
+
+    a = finisher.ImportFinisher(uid)
+    a.run()
+    condition = condition
+
+    b = finisher.FiltrateFinisher(
+        datasets=a.data_checked,
+        condition=condition
+    )
+    b.run()
+
+    c = finisher.SortFinisher(
+        datasets=a.data_checked,
+        accession=b.accession_filtered,
+        mode='submit',
+        key='previously')
+    c.run()
+
+    pagination_num_per = 10
+    d = finisher.PaginateFinisher(
+        data=c.datasets_sorted,
+        run_per_page=pagination_num_per)
+    d.run()
+    groups = d.groups
+    if groups:
+        pagination_num = range(1, len(groups) + 1)
+
+        if re.search("(?<=\\?p).*", request.url):
+            page = int(re.search("(?<=\\?p).*", request.url).group())
+        else:
+            page = 1
+        this_page_data = groups[page - 1]
+
+        return render_template('test2.html',
+                               uid=uid,
+                               dataset=this_page_data,
+                               pagination_num=pagination_num,
+                               page=page)
+    else:
+        return render_template('404.html')
 
 
 if __name__ == '__main__':

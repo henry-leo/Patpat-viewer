@@ -90,7 +90,7 @@ class YearFilter(Filter):
 
         if check is True:
             start = time.strptime(self.given['condition']['start'], '%Y')
-            end = time.strptime(self.given['condition']['end'], '%Y')
+            end = time.strptime(str(int(self.given['condition']['end']) + 1), '%Y')
 
             accession = self.given['accession'].copy()
             for acc in accession:
@@ -214,8 +214,12 @@ class KeywordFilter(Filter):
 
     def _condition_check(self):
         """如果输入的字典格式不符合要求"""
-        if not self.given['condition']['keywords']:
+        if not isinstance(self.given['condition']['keywords'], list) or\
+                'keywords' not in self.given['condition']:
             print(f"Filter condition are mistake: {self.given['condition']}")
+            return self.given
+        elif not self.given['condition']['keywords']:
+            # 空筛选
             return self.given
         else:
             # 表明可以进行筛选

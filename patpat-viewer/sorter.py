@@ -19,8 +19,11 @@ class SubmitSorter(Sorter):
     def run(self):
         target = dict()
         for acc in self.accession:
-            target[acc] = time.strptime(self.datasets[acc]['time'], '%Y-%m-%d')
-
+            try:
+                target[acc] = time.strptime(self.datasets[acc]['time'], '%Y-%m-%d')
+            except TypeError:
+                # iProX没有时间属性，这里设为默认时间1970-01-01
+                target[acc] = time.strptime('1970-01-01', '%Y-%m-%d')
         m = True
         if self._mode == 'recently':
             m = True

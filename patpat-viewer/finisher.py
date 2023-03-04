@@ -71,6 +71,7 @@ class ImportFinisher:
 
 class FiltrateFinisher:
     """"""
+
     def __init__(self, datasets: dict, condition: dict):
         self.accession_filtered = set()
         self.datasets = datasets
@@ -106,57 +107,47 @@ class FiltrateFinisher:
 
 class SortFinisher:
     """"""
+
     def __init__(self, datasets, accession, mode: str, key: {str, int}):
+        self.accession = []
+        self.datasets_sorted = []
         if mode == 'submit':
-            self.sorter = sorter.SubmitSorter(datasets=datasets,
-                                              accession=accession,
-                                              mode=key)
+            self._sorter = sorter.SubmitSorter(datasets=datasets,
+                                               accession=accession,
+                                               mode=key)
         elif mode == 'randomize':
-            self.sorter = sorter.RandomizeSorter(datasets=datasets,
-                                                 accession=accession,
-                                                 num=key)
+            self._sorter = sorter.RandomizeSorter(datasets=datasets,
+                                                  accession=accession,
+                                                  num=key)
 
     def run(self):
-        self.sorter.run()
+        self._sorter.run()
+        self.accession = self._sorter.accession
+        datasets_sorted = [self._sorter.datasets[acc] for acc in self._sorter.accession]
+        self.datasets_sorted = datasets_sorted
 
 
 class PaginateFinisher:
     """"""
-    def __init__(self, run_per_page=5):
+
+    def __init__(self, data: {list, dict}=None, run_per_page=5):
         self.pagination = None
-        self.config_group = list()
+        self.groups = list()
         self.run_per_page = run_per_page
 
-        self._configs = dict()
+        self._data = data
 
     def run(self):
-        self._config_precess()
-        configs_group = utility.group_list(self._configs, self.run_per_page)
-        pagination = range(1, len(configs_group) + 1)
+        if self._data:
+            if isinstance(self._data, dict):
+                self._data = [i for i in self._data.values()]
+        elif self._data is None:
+            self._data = utility.config_process()
 
-        self.config_group = configs_group
+        groups = utility.group_list(self._data, self.run_per_page)
+        pagination = range(1, len(groups) + 1)
+
+        self.groups = groups
         self.pagination = pagination
 
-        return configs_group, pagination
-
-    def _config_precess(self):
-        try:
-            with open('../patpat_env/logs/tasks.json', mode='r') as f:
-                configs = json.loads(f.readline())
-            f.close()
-        except FileNotFoundError:
-            with open('../patpat_env/logs/tasks.json', mode='w') as f:
-                pass
-            f.close()
-
-        configs = [i for i in configs['tasks'].values() if i.get('startTime')]
-        configs.sort(reverse=True, key=lambda x: x['startTime'])
-
-        for n, task_config in enumerate(configs):
-            task_config['startTime'] = time.strftime('%Y-%m-%d %H:%M:%S',
-                                                     time.localtime(task_config['startTime']))
-            if task_config['state'] == 'Running':
-                task_config['state'] = 'Error'
-            task_config['entry'] = f'Task-{n}'
-
-        self._configs = configs
+        return groups, pagination

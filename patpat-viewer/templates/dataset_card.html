@@ -1,10 +1,12 @@
 {% macro dataset_card(dataset) %}
-<div class="card card-lg">
-    <div class="card-body">
-        <div class="container-lg h4">
-            {{ dataset['title'] }}
+<div class="card card-lg p-3 m-3">
+    <div class="card-body ">
+        <div class="container-lg h4 m-3">
+            <a href="#" style="color: #5f801e">
+                <strong>{{ dataset['title'] }}</strong>
+            </a>
         </div>
-        <div class="container-lg">
+        <div class="container-lg m-3">
             <div class="col">
                 <div class="row">
                     <div>
@@ -21,8 +23,7 @@
                 </div>
             </div>
         </div>
-        <p></p>
-        <div class="container-lg"
+        <div class="container-lg m-3"
              style="display: -webkit-box;
                     overflow: hidden;
                     white-space: normal !important;
@@ -30,23 +31,25 @@
                     word-wrap:break-word;
                     -webkit-line-clamp:5;
                     -webkit-box-orient: vertical">
+
             {{ dataset['summary'] }}
+
         </div>
-        <div class="container-lg">
+        <div class="container-lg m-3">
             <!-- Keywords -->
             <div class="row">
                 <div class="col-lg-1">
-                    Keyword:
+                    <b>Keyword</b>
                 </div>
-                <div class="col-lg-8">
+                <div class="col-lg-8 text-truncate text-secondary">
                     {% for keyword in dataset['keywords'] %}
-                        {{ keyword }};
+                    {{ keyword }};
                     {% endfor %}
                 </div>
             </div>
         </div>
         <div class="container-lg">
-            <div class="row">
+            <div class="row gap-3">
                 <div class="col-lg-1">
                     {% if dataset['protein'] %}
                     <div class="badge bg-success">Protein Level</div>
@@ -61,10 +64,17 @@
                     <div class="badge bg-secondary ">Peptides Level</div>
                     {% endif %}
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-1">
                     <abbr class="text-warning" title="Somethings">
                         <strong>?</strong>
                     </abbr>
+                </div>
+
+                <div class="col-1 ">|</div>
+
+                <div class="col-lg ">
+                    <a href="{{ dataset['website'] }}" class="text-secondary" target="_blank"><strong>Go to
+                        Source</strong></a>
                 </div>
             </div>
         </div>

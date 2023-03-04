@@ -1,8 +1,9 @@
 """"""
 import json
+import time
 
 
-def group_list(input_list, n):
+def group_list(input_list: list, n: int):
     g = []
     for i in range(0, len(input_list), n):
         g.append(input_list[i:i + n])
@@ -33,6 +34,28 @@ def get_result_from_file(task=None):
 def print_sorted(data, acc):
     v = [data[i]['time'] for i in acc]
     print(v)
+
+
+def config_process():
+    try:
+        with open('../patpat_env/logs/tasks.json', mode='r') as f:
+            configs = json.loads(f.readline())
+        f.close()
+    except FileNotFoundError:
+        with open('../patpat_env/logs/tasks.json', mode='w') as f:
+            pass
+        f.close()
+
+    configs = [i for i in configs['tasks'].values() if i.get('startTime')]
+    configs.sort(reverse=True, key=lambda x: x['startTime'])
+
+    for n, task_config in enumerate(configs):
+        task_config['startTime'] = time.strftime('%Y-%m-%d %H:%M:%S',
+                                                 time.localtime(task_config['startTime']))
+        if task_config['state'] == 'Running':
+            task_config['state'] = 'Error'
+        task_config['entry'] = f'Task-{n}'
+    return configs
 """
 def get_fake_data():
     with open('logs/tasks.json', mode='r') as f:
