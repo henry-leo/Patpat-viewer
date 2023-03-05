@@ -117,7 +117,7 @@ def test():
     return render_template('test.html')
 
 
-@patpat_viewer.route('/Taskbar/<uid>', methods=['GET'])
+@patpat_viewer.route('/taskbar/<uid>', methods=['GET'])
 def test2(
         uid,
         condition=None,
@@ -158,7 +158,7 @@ def test2(
                                pagination_num=pagination_num,
                                page=page)
     else:
-        return render_template('404.html')
+        return render_template('Empty.html')
 
 
 if __name__ == '__main__':

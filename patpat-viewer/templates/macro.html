@@ -8,47 +8,48 @@
 {% endmacro %}
 
 {% macro task_entry(config) %}
-<div class="row row-cols-5 p-2">
+<div class="row row-cols-4 p-2 text-lg-center">
     {% if config['startTime'] %}
-    <div class="col">
+    <div class="col align-self-lg-center">
         <span class="align-middle">{{ config['startTime'] }}</span>
     </div>
     {% else %}
-    <div class="col">
+    <div class="col align-self-lg-center">
         <span class="align-middle">-</span>
     </div>
     {% endif %}
 
-    <div class="col">
+    <div class="col align-self-lg-center">
         <span class="align-middle">{{ config['identifier'] }}</span>
     </div>
 
-    <div class="col">
-        <span class="align-middle">{{ config['gene'] }}</span>
-    </div>
-
     {% if config['state'] == 'Preparation' %}
-    <div class="col">
+    <div class="col align-self-lg-center">
         <span class="align-middle"><span class="badge bg-primary">{{ config['state'] }}</span></span>
     </div>
     {% elif config['state'] == 'Running' %}
-    <div class="col">
+    <div class="col align-self-lg-center">
         <span class="align-middle"><span class="badge bg-warning">{{ config['state'] }}</span></span>
     </div>
     {% elif config['state'] == 'Error' %}
-    <div class="col">
+    <div class="col align-self-lg-center">
         <span class="align-middle"><span class="badge bg-danger">{{ config['state'] }}</span></span>
     </div>
     {% elif config['state'] == 'Success' %}
-    <div class="col">
+    <div class="col align-self-lg-center">
         <span class="align-middle"><span class="badge bg-success">{{ config['state'] }}</span></span>
     </div>
     {% endif %}
 
-    <div class="col">
-        <button class="btn btn-dark btn-sm" type="button" data-bs-toggle="collapse"
+    <div class="col align-self-lg-center">
+        <button class="btn text-bg-secondary py-0 border-0 fw-bold" type="button" data-bs-toggle="collapse"
                 data-bs-target="#{{ config['entry'] }}" aria-expanded="false" aria-controls="collapse">
-            <b>-↓-</b>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-arrows-expand" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8ZM7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2ZM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10Z"/>
+            </svg>
+            Expend
         </button>
     </div>
 </div>
@@ -60,11 +61,11 @@
 {% endmacro %}
 
 {% macro task_table(config) %}
-<div class="p-2 row bg-secondary text-white border-bottom border-3">
-    <div class="col"><b>Time</b></div>
-    <div class="col"><b>Identifier</b></div>
-    <div class="col"><b>Peptides</b></div>
-    <div class="col"><b>Description</b></div>
+<div class="p-2 row bg-secondary text-white border-bottom border-3 ">
+    <div class="col">Time</div>
+    <div class="col">Identifier</div>
+    <div class="col">Peptides</div>
+    <div class="col">Description</div>
 </div>
 <div class="p-2 row">
     <div class="col">{{ config['startTime'] }}</div>
@@ -74,11 +75,11 @@
 </div>
 
 <div class="p-2 row bg-secondary text-white border-bottom border-3">
-    <div class="col"><b>Digestion Information</b></div>
-    <div class="col"><b>Enzyme</b></div>
-    <div class="col"><b>Missed Cleavages</b></div>
-    <div class="col"><b>Min Length</b></div>
-    <div class="col"><b>Max Length</b></div>
+    <div class="col fw-bold">Digestion Information</div>
+    <div class="col">Enzyme</div>
+    <div class="col">Missed Cleavages</div>
+    <div class="col">Min Length</div>
+    <div class="col">Max Length</div>
 </div>
 <div class="p-2 row">
     <div class="col"></div>
@@ -89,11 +90,11 @@
 </div>
 
 <div class="p-2 row bg-secondary text-white border-bottom border-3">
-    <div class="col"><b>Organism Information</b></div>
-    <div class="col"><b>Accession</b></div>
-    <div class="col"><b>Name</b></div>
-    <div class="col"><b>Proteome Source</b></div>
-    <div class="col"><b></b></div>
+    <div class="col fw-bold">Organism Information</div>
+    <div class="col">Accession</div>
+    <div class="col">Name</div>
+    <div class="col">Proteome Source</div>
+    <div class="col"></div>
 </div>
 <div class="p-2 row">
     <div class="col"></div>
@@ -105,10 +106,10 @@
 
 <div class="p-2 row bg-secondary text-white border-bottom border-3">
     <div class="col"><b>Task Information</b></div>
-    <div class="col"><b>Task</b></div>
-    <div class="col"><b>Mapper</b></div>
-    <div class="col"><b>State</b></div>
-    <div class="col"><b></b></div>
+    <div class="col">Task</div>
+    <div class="col">Mapper</div>
+    <div class="col">State</div>
+    <div class="col"></div>
 </div>
 <div class="p-2 row">
     <div class="col"></div>
@@ -121,14 +122,27 @@
     <div class="col">{{ config['state'] }}</div>
     {% if config['state'] == 'Success' %}
     <div class="col">
-        <a href="/Taskbar/{{ config['task'] }}" class="btn btn-primary btn-sm" type="button">
-            <b>View</b>
+        <a href="/taskbar/{{ config['task'] }}" class="btn btn-outline-success btn-sm fw-bold" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-zoom-in"
+                 viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                <path d="M10.344 11.742c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1 6.538 6.538 0 0 1-1.398 1.4z"/>
+                <path fill-rule="evenodd"
+                      d="M6.5 3a.5.5 0 0 1 .5.5V6h2.5a.5.5 0 0 1 0 1H7v2.5a.5.5 0 0 1-1 0V7H3.5a.5.5 0 0 1 0-1H6V3.5a.5.5 0 0 1 .5-.5z"/>
+            </svg>
+            Details
         </a>
     </div>
     {% else %}
     <div class="col">
-        <button class="btn btn-primary btn-sm" type="button" disabled>
-            <b>View</b>
+        <button class="btn btn-outline-dark btn-sm" type="button" disabled>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square"
+                 viewBox="0 0 16 16">
+                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+            </svg>
+            <b>Details</b>
         </button>
     </div>
     {% endif %}
@@ -194,16 +208,15 @@
     </div>
 
 </div>
-
 {% endmacro %}
 
 
 {% macro dataset_card(dataset) %}
 <div class="card card-lg p-3 m-3">
     <div class="card-body ">
-        <div class="container-lg h4 m-3">
-            <a href="#" style="color: #5f801e">
-                <strong>{{ dataset['title'] }}</strong>
+        <div class="container-lg fs-4 m-3">
+            <a class="fw-bold text-decoration-none" href="#" style="color: #0071bc">
+                {{ dataset['title'] }}
             </a>
         </div>
         <div class="container-lg m-3">
@@ -215,7 +228,7 @@
                         {% endfor %}
                     </div>
                 </div>
-                <div class="row" style="color: #5f801e">
+                <div class="row" style="color: #4d8070">
                     <div>
                         <b>{{ dataset['database'] }}. </b>{{ dataset['time'] }}.
                         Accession: {{ dataset['identifier'] }}
@@ -265,7 +278,11 @@
                     {% endif %}
                 </div>
                 <div class="col-lg-1">
-                    <abbr class="text-warning" title="Somethings">
+                    <abbr class="text-warning"
+                          title="The term 'protein level' refers to results obtained by searching using UniProt
+                          identifiers, while 'peptides level' refers to results obtained by searching using peptide
+                          sequences. Search results that exist at that level are shown in green, while those that do not
+                           are shown in grey.">
                         <strong>?</strong>
                     </abbr>
                 </div>
@@ -280,4 +297,83 @@
         </div>
     </div>
 </div>
+{% endmacro %}
+
+
+{% macro page_nav(page, page_num, router) %}
+
+{% if router %}
+{% set router = "/" + router %}
+{% else %}
+{% set router = "" %}
+{% endif %}
+
+
+{% if page != 1 %}
+<li class="page-item">
+    <a class="page-link text-black" href="/taskbar{{ router }}?p{{ page-1 }}"><<</a>
+</li>
+{% else %}
+<li class="page-item">
+    <a class="page-link text-black" href="/taskbar{{ router }}?p1"><<</a>
+</li>
+{% endif %}
+
+{% if page_num <= 7 %}
+{% for p in range(1, page_num + 1) %}
+<li class="page-item">
+    <a class="page-link text-black" href="/taskbar{{ router }}?p{{ p }}">{{ p }}</a>
+</li>
+{% endfor %}
+{% else %}
+{% if page <= 3 %}
+{% for p in range(1, page + 2) %}
+<li class="page-item">
+    <a class="page-link text-black" href="/taskbar{{ router }}?p{{ p }}">{{ p }}</a>
+</li>
+{% endfor %}
+<li class="page-item"><a class="page-link text-black">...</a></li>
+{% for p in range(page_num - 2, page_num + 1) %}
+<li class="page-item">
+    <a class="page-link text-black" href="/taskbar{{ router }}?p{{ p }}">{{ p }}</a>
+</li>
+{% endfor %}
+{% elif page >= page_num - 2 %}
+{% for p in range(1, 3) %}
+<li class="page-item">
+    <a class="page-link text-black" href="/taskbar{{ router }}?p{{ p }}">{{ p }}</a>
+</li>
+{% endfor %}
+<li class="page-item"><a class="page-link text-black">...</a></li>
+{% for p in range(page - 1, page_num + 1) %}
+<li class="page-item">
+    <a class="page-link text-black" href="/taskbar{{ router }}?p{{ p }}">{{ p }}</a>
+</li>
+{% endfor %}
+{% else %}
+<li class="page-item">
+    <a class="page-link text-black" href="/taskbar{{ router }}?p1">1</a>
+</li>
+<li class="page-item"><a class="page-link text-black">...</a></li>
+{% for p in range(page - 1, page + 2) %}
+<li class="page-item">
+    <a class="page-link text-black" href="/taskbar{{ router }}?p{{ p }}">{{ p }}</a>
+</li>
+{% endfor %}
+<li class="page-item"><a class="page-link text-black">...</a></li>
+<li class="page-item">
+    <a class="page-link text-black" href="/taskbar{{ router }}?p{{ page_num }}">{{ page_num }}</a>
+</li>
+{% endif %}
+{% endif %}
+
+{% if page != page_num %}
+<li class="page-item">
+    <a class="page-link text-black" href="/taskbar{{ router }}?p{{ page+1 }}">>></a>
+</li>
+{% else %}
+<li class="page-item">
+    <a class="page-link text-black" href="/taskbar{{ router }}?p{{ page_num }}">>></a>
+</li>
+{% endif %}
 {% endmacro %}

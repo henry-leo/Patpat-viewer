@@ -2,33 +2,32 @@
 
 {% block content %}
 
-<div class="container p-5">
-    <table style="margin:0 auto">
-        <tr>
-            <th>
-                <div style="font-style: normal;font-weight: bold;font-size: 32px;line-height: 39px;
-                            display: flex;align-items: center;text-align: center;
-                            color: #000000;">
-                    Welcome to Patpat
+<div class="container p-5 ">
+    <div class="row text-center">
+        <div class="col-lg align-self-lg-center">
+            <div class="col">
+                <div class="row-cols-lg-8">
+                    <div class="h3 pb-3">
+                        <strong>Welcome to Patpat-viewer</strong>
+                    </div>
+                    <div class="fs-5 text-secondary gap-lg-3">
+                        <p>By simply entering the UniProt identifier, Patpat can find protein datasets that match
+                            your interests.</p>
+                        <p>Here, you can easily and enjoyably browse Patpat's search results to aid in your
+                            research.</p>
+                    </div>
                 </div>
-                <div style="width: 500px;height: 100px;
-                            font-style: normal;font-weight: 400;font-size: 24px;line-height: 29px;
-                            color: #000000;">
-                    Type in the UniProt identifier to find the proteomics dataset that matches your interest.
+                <div class="row pt-2">
+                    <p><a class="btn btn-dark btn-lg" href="/taskbar">Show Results</a></p>
                 </div>
-                <div style="text-align: center">
-                    <p>
-                        <a class="btn btn-dark btn-lg"
-                           href="/taskbar" v>View</a>
-                    </p>
-                </div>
-            </th>
-            <th>
-                <div>
-                    <img src="/static/xjm.jpg" style="width: 420px;height: 400px" alt="front cover">
-                </div>
-            </th>
-        </tr>
+            </div>
+        </div>
+        <div class="col-lg">
+            <div>
+                <img src="/static/xjm.jpg" style="width: 420px;height: 400px" alt="front cover">
+            </div>
+        </div>
+    </div>
     </table>
 </div>
 
