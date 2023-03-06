@@ -261,23 +261,9 @@
                 </div>
             </div>
         </div>
-        <div class="container-lg">
-            <div class="row gap-3">
-                <div class="col-lg-1">
-                    {% if dataset['protein'] %}
-                    <div class="badge bg-success">Protein Level</div>
-                    {% else %}
-                    <div class="badge bg-secondary ">Protein Level</div>
-                    {% endif %}
-                </div>
-                <div class="col-lg-1">
-                    {% if dataset['peptides'] %}
-                    <div class="badge bg-success ">Peptides Level</div>
-                    {% else %}
-                    <div class="badge bg-secondary ">Peptides Level</div>
-                    {% endif %}
-                </div>
-                <div class="col-lg-1">
+        <div class="container">
+            <div class="row">
+                <div class="col col-auto">
                     <abbr class="text-warning"
                           title="The term 'protein level' refers to results obtained by searching using UniProt
                           identifiers, while 'peptides level' refers to results obtained by searching using peptide
@@ -286,10 +272,30 @@
                         <strong>?</strong>
                     </abbr>
                 </div>
+                <div class="col col-auto">
+                    <ul class="list-inline list-inline-dots">
+                        <li class="list-inline-item">
+                            {% if dataset['protein'] %}
+                            <div class="badge bg-success">Protein Level</div>
+                            {% else %}
+                            <div class="badge bg-secondary ">Protein Level</div>
+                            {% endif %}
 
-                <div class="col-1 ">|</div>
+                        </li>
+                        <li class="list-inline-item">
+                            {% if dataset['peptides'] %}
+                            <div class="badge bg-success ">Peptides Level</div>
+                            {% else %}
+                            <div class="badge bg-secondary ">Peptides Level</div>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
 
-                <div class="col-lg ">
+
+                <div class="col col-auto">|</div>
+
+                <div class="col col-auto">
                     <a href="{{ dataset['website'] }}" class="text-secondary" target="_blank"><strong>Go to
                         Source</strong></a>
                 </div>
