@@ -42,8 +42,8 @@ def home():
     return render_template('Home.html')
 
 
-@patpat_viewer.route('/taskbar', methods=['GET', 'POST'])
-def taskbar(pagination_num_per=10):
+@patpat_viewer.route('/tasktable', methods=['GET', 'POST'])
+def tasktable(pagination_num_per=10):
     configs = utility.config_process()
 
     pagination_num_per = pagination_num_per
@@ -51,13 +51,13 @@ def taskbar(pagination_num_per=10):
     configs_group = utility.group_list(configs, pagination_num_per)
 
     this_page_data, pagination_num, page = choose_page(groups=configs_group)
-    return render_template('Taskbar.html',
+    return render_template('TaskTable.html',
                            configs=this_page_data,
                            pagination_num=pagination_num,
                            page=page)
 
 
-@patpat_viewer.route('/taskbar/<uid>', methods=['GET'])
+@patpat_viewer.route('/tasktable/<uid>', methods=['GET'])
 def test2(
         uid,
         condition=None,
@@ -144,7 +144,7 @@ def search():
         q.identifier = protein_id
         q.simple_query()
 
-        return redirect(url_for('taskbar'), code=301)
+        return redirect(url_for('tasktable'), code=301)
         # redirect(url_for('search_loading', identifier=identifier), code=301)
 
     return render_template('Search.html')
