@@ -2,6 +2,10 @@
 import json
 import time
 
+import env
+
+PATPAT_ENV = env.get_env()
+
 
 def group_list(input_list: list, n: int):
     group = []
@@ -20,7 +24,7 @@ def get_result_from_file(task=None):
         dict, project metadata
     """
     if task:
-        with open(f'../patpat_env/result/{task}/result.json') as f:
+        with open(f'{PATPAT_ENV}/result/{task}/result.json') as f:
             data_json = ''.join(f.readlines())
             data_dict = json.loads(data_json)
         f.close()
@@ -38,11 +42,11 @@ def print_sorted(data, acc):
 
 def config_process():
     try:
-        with open('../patpat_env/logs/tasks.json', mode='r') as f:
+        with open(f'{PATPAT_ENV}/logs/tasks.json', mode='r') as f:
             configs = json.loads(f.readline())
         f.close()
     except FileNotFoundError:
-        with open('../patpat_env/logs/tasks.json', mode='w') as f:
+        with open(f'{PATPAT_ENV}/logs/tasks.json', mode='w') as f:
             pass
         f.close()
 
@@ -56,6 +60,8 @@ def config_process():
             task_config['state'] = 'Error'
         task_config['entry'] = f'Task-{n}'
     return configs
+
+
 """
 def get_fake_data():
     with open('logs/tasks.json', mode='r') as f:
@@ -105,4 +111,3 @@ def get_fake_data():
 
     return res
 """
-
