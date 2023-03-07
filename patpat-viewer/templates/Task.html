@@ -1,13 +1,102 @@
 {% extends "base.html" %}
 
 
-{% block title %}Patpat{% endblock %}
-
 {% block content %}
 {% import 'macro.html' as macro with context %}
 
-{% for d in dataset %}
-    {{ macro.dataset_card(d) }}
+{% for dataset in datasets %}
+<div class="card card-lg p-3 m-3">
+    <div class="card-body ">
+        <div class="container-lg fs-4 m-3">
+            <a class="fw-bold text-decoration-none" href="/tasktable/{{ uid }}/{{ dataset['accession'] }}"
+               style="color: #0071bc">
+                {{ dataset['title'] }}
+            </a>
+        </div>
+        <div class="container-lg m-3">
+            <div class="col">
+                <div class="row">
+                    <div>
+                        {% for i in dataset['authors'] %}
+                        {{ i+',' }}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="row" style="color: #4d8070">
+                    <div>
+                        <b>{{ dataset['database'] }}. </b>{{ dataset['time'] }}.
+                        Accession: {{ dataset['identifier'] }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-lg m-3"
+             style="display: -webkit-box;
+                    overflow: hidden;
+                    white-space: normal !important;
+                    text-overflow: ellipsis;
+                    word-wrap:break-word;
+                    -webkit-line-clamp:5;
+                    -webkit-box-orient: vertical">
+
+            {{ dataset['summary'] }}
+
+        </div>
+        <div class="container-lg m-3">
+            <!-- Keywords -->
+            <div class="row">
+                <div class="col-lg-1">
+                    <b>Keyword</b>
+                </div>
+                <div class="col-lg-8 text-truncate text-secondary">
+                    {% for keyword in dataset['keywords'] %}
+                    {{ keyword }};
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col col-auto">
+                    <abbr class="text-warning"
+                          title="The term 'protein level' refers to results obtained by searching using UniProt
+                          identifiers, while 'peptides level' refers to results obtained by searching using peptide
+                          sequences. Search results that exist at that level are shown in green, while those that do not
+                           are shown in grey.">
+                        <strong>?</strong>
+                    </abbr>
+                </div>
+                <div class="col col-auto">
+                    <ul class="list-inline list-inline-dots">
+                        <li class="list-inline-item">
+                            {% if dataset['protein'] %}
+                            <div class="badge bg-success">Protein Level</div>
+                            {% else %}
+                            <div class="badge bg-secondary ">Protein Level</div>
+                            {% endif %}
+
+                        </li>
+                        <li class="list-inline-item">
+                            {% if dataset['peptides'] %}
+                            <div class="badge bg-success ">Peptides Level</div>
+                            {% else %}
+                            <div class="badge bg-secondary ">Peptides Level</div>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+
+
+                <div class="col col-auto">|</div>
+
+                <div class="col col-auto">
+                    <a href="{{ dataset['website'] }}" class="text-secondary" target="_blank"><strong>Go to
+                        Source</strong></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endfor %}
 
 <nav aria-label="Page navigation">

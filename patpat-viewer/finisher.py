@@ -65,6 +65,7 @@ class ImportFinisher:
 
         # 添加Patpat识别符
         for n, d in enumerate(data_checked.values()):
+            d['accession'] = f'PAT{str(n).zfill(4)}'
             self.data_checked.update({f'PAT{str(n).zfill(4)}': d})
         return self.data_checked
 
@@ -125,7 +126,7 @@ class SortFinisher:
         self.accession = self._sorter.accession
         datasets_sorted = [self._sorter.datasets[acc] for acc in self._sorter.accession]
         self.datasets_sorted = datasets_sorted
-        return self.datasets_sorted
+        return self.accession
 
 
 class PaginateFinisher:

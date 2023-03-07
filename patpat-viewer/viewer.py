@@ -58,11 +58,11 @@ def tasktable(pagination_num_per=10):
 
 
 @patpat_viewer.route('/tasktable/<uid>', methods=['GET'])
-def test2(
+def task(
         uid,
         condition=None,
         pagination_num_per=10):
-    # uid = '3d5b4e1d-937c-4661-83a2-b6ed7c19f060'
+
     uid = uid
     if condition is None:
         condition = {'start': '',
@@ -79,11 +79,13 @@ def test2(
         condition=condition
     ).run()
 
-    data_sorted = finisher.SortFinisher(
+    acc_sorted = finisher.SortFinisher(
         datasets=data_imported,
         accession=acc_filtered,
         mode='submit',
         key='previously').run()
+
+    data_sorted = [data_imported[acc] for acc in acc_sorted]
 
     pagination_num_per = pagination_num_per
     data_group = finisher.PaginateFinisher(
@@ -94,16 +96,19 @@ def test2(
         this_page_data, pagination_num, page = choose_page(groups=data_group)
         return render_template('Task.html',
                                uid=uid,
-                               dataset=this_page_data,
+                               datasets=this_page_data,
                                pagination_num=pagination_num,
                                page=page)
     else:
         return render_template('Empty.html')
 
 
-@patpat_viewer.route('/about')
-def about():
-    return render_template('About.html')
+@patpat_viewer.route('/tasktable/<uid>/<accession>')
+def about(uid, accession):
+    uid = uid
+    data_imported = finisher.ImportFinisher(uid).run()
+    dataset = data_imported[accession]
+    return render_template('Dataset.html', dataset=dataset)
 
 
 @patpat_viewer.route('/contact')
@@ -112,7 +117,7 @@ def contact():
 
 
 @patpat_viewer.errorhandler(404)
-def page_not_found():
+def page_not_found(*args):
     return render_template('404.html'), 404
 
 
