@@ -25,9 +25,10 @@ from flask_bootstrap import Bootstrap5
 
 import finisher
 import utility
+import env
 
 
-def create_app(name=__name__):
+def create_app(name="Patpat-viewer"):
     flask = Flask(name)
     Bootstrap5(flask)
 
@@ -37,9 +38,15 @@ def create_app(name=__name__):
 patpat_viewer = create_app()
 
 
-@patpat_viewer.route('/')
-def home():
-    return render_template('Home.html')
+@patpat_viewer.route('/', methods=['GET', 'POST'])
+def home(env_=None):
+    if request.method == 'POST':
+
+        env.set_env(env_)
+        return render_template('Home.html',
+                               env=env_)
+    else:
+        return render_template('Home.html')
 
 
 @patpat_viewer.route('/tasktable', methods=['GET', 'POST'])
@@ -104,7 +111,7 @@ def task(
 
 
 @patpat_viewer.route('/tasktable/<uid>/<accession>')
-def about(uid, accession):
+def dataset_page(uid, accession):
     uid = uid
     data_imported = finisher.ImportFinisher(uid).run()
     dataset = data_imported[accession]

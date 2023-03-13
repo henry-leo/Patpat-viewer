@@ -68,9 +68,11 @@
                 <div class="card" style="height: calc(24rem + 10px); background: #3c3f41">
                     <div class="card-title"><span class="text-white fs-6">Protein Level Results</span></div>
                     <div class="list-group list-group-flush overflow-auto" style="max-height: 35rem">
-                        {% for i in dataset['protein'] %}
-                        <div class="list-group-item">{{ i }}</div>
-                        {% endfor %}
+                        {% if dataset['protein'] %}
+                            {% for i in dataset['protein'] %}
+                            <div class="list-group-item">{{ i }}</div>
+                            {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -78,9 +80,11 @@
                 <div class="card" style="height: calc(24rem + 10px); background: #3c3f41">
                     <div class="card-title"><span class="text-white fs-6">Peptides Level Results</span></div>
                     <div class="list-group list-group-flush overflow-auto" style="max-height: 35rem">
-                        {% for i in dataset['peptides'] %}
-                        <div class="list-group-item">{{ i }}</div>
-                        {% endfor %}
+                        {% if dataset['peptides'] %}
+                            {% for i in dataset['peptides'] %}
+                            <div class="list-group-item">{{ i }}</div>
+                            {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
             </div>

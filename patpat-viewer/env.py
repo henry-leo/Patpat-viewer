@@ -6,7 +6,7 @@ def _init():
     PATPAT_ENV = None
 
 
-def set_env(env):
+def set_env(env=None):
     global PATPAT_ENV
     PATPAT_ENV = env
 
