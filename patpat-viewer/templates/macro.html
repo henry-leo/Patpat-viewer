@@ -237,8 +237,8 @@
 </li>
 {% endfor %}
 {% else %}
-{% if page <= 3 %}
-{% for p in range(1, page + 2) %}
+{% if page <= 4 %}
+{% for p in range(1, page + 3) %}
 <li class="page-item">
     <a class="page-link text-black" href="/tasktable{{ router }}?p{{ p }}">{{ p }}</a>
 </li>
@@ -249,8 +249,8 @@
     <a class="page-link text-black" href="/tasktable{{ router }}?p{{ p }}">{{ p }}</a>
 </li>
 {% endfor %}
-{% elif page >= page_num - 2 %}
-{% for p in range(1, 3) %}
+{% elif page >= page_num - 3 %}
+{% for p in range(1, 4) %}
 <li class="page-item">
     <a class="page-link text-black" href="/tasktable{{ router }}?p{{ p }}">{{ p }}</a>
 </li>
@@ -266,7 +266,7 @@
     <a class="page-link text-black" href="/tasktable{{ router }}?p1">1</a>
 </li>
 <li class="page-item"><a class="page-link text-black">...</a></li>
-{% for p in range(page - 1, page + 2) %}
+{% for p in range(page - 2, page + 3) %}
 <li class="page-item">
     <a class="page-link text-black" href="/tasktable{{ router }}?p{{ p }}">{{ p }}</a>
 </li>
