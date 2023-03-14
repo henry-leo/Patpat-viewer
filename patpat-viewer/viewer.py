@@ -1,10 +1,24 @@
-"""
+"""Patpat-viewer APP
+    This APP Power by Flask
 
     Typical usage example:
     典型用法示例：
 
+    # Development Mode
 
-Copyright 2022 Liao Weiheng
+    patpat_viewer.run(debug=True)
+
+    # Production Mode
+
+    from wsgiref import simple_server
+
+    host = '127.0.0.1'
+    port = 5000
+    print(f'Running on http://{host}:{port}')
+    app = simple_server.make_server(host=host, port=port, app=patpat_viewer)
+    app.serve_forever()
+
+Copyright 2022 Weiheng Liao Minyan Mo
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -69,7 +83,6 @@ def task(
         uid,
         condition=None,
         pagination_num_per=10):
-
     uid = uid
     if condition is None:
         condition = {'start': '',
@@ -164,3 +177,14 @@ def search():
 
 if __name__ == '__main__':
     patpat_viewer.run(debug=True)
+
+    """
+    from wsgiref import simple_server
+    host = '127.0.0.1'
+    port = 5000
+    print(f'Running on http://{host}:{port}')
+    app = simple_server.make_server(host=host, port=port, app=patpat_viewer)
+    app.serve_forever()
+    """
+
+
