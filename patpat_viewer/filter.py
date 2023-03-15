@@ -2,7 +2,7 @@
 
 import time
 
-import checker
+from patpat_viewer import checker
 
 
 class Filter:

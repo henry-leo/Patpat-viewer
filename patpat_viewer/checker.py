@@ -4,8 +4,8 @@
     Typical usage example:
     典型用法示例：
 
-    import patpat-viewer. checker as checker
-    import patpat-viewer. finisher as finisher
+    import patpat_viewer.checker as checker
+    import patpat_viewer.finisher as finisher
 
     uuid = '3d5b4e1d-937c-4661-83a2-b6ed7c19f060'
 

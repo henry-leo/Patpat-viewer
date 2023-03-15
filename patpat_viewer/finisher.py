@@ -1,12 +1,12 @@
 """数据导入、排序和分页处理器
 """
-
+import time
 import uuid
 
-import checker
-import filter
-import sorter
-import utility
+from patpat_viewer import checker
+from patpat_viewer import filter
+from patpat_viewer import sorter
+from patpat_viewer import utility
 
 
 class ImportFinisher:
@@ -70,7 +70,7 @@ class ImportFinisher:
 
 
 class FiltrateFinisher:
-    """"""
+    """筛选dataset"""
 
     def __init__(self, datasets: dict, condition: dict):
         self.accession_filtered = set()
@@ -106,7 +106,7 @@ class FiltrateFinisher:
 
 
 class SortFinisher:
-    """"""
+    """dataset排序"""
 
     def __init__(self, datasets, accession, mode: str, key: {str, int}):
         self.accession = []
@@ -152,3 +152,17 @@ class PaginateFinisher:
         self.pagination = pagination
 
         return self.groups
+
+
+class FilterBox:
+    def __init__(self):
+        self.time = '0001-01-01'
+
+    def cmpt_max(self, data: list):
+        for d in data:
+            timestr1 = time.strptime(self.time, '%Y-%m-%d')
+            timestr2 = time.strptime(d['time'], '%Y-%m-%d')
+            if timestr1 > timestr2:
+                pass
+            else:
+                self.time = d['time']

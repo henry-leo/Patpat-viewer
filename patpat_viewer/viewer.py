@@ -17,42 +17,19 @@
     print(f'Running on http://{host}:{port}')
     app = simple_server.make_server(host=host, port=port, app=patpat_viewer)
     app.serve_forever()
-
-Copyright 2022 Weiheng Liao Minyan Mo
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
 """
 import re
 
-from flask import Flask, render_template, request
-from flask_bootstrap import Bootstrap5
+from flask import render_template, request, redirect, url_for
 
-import finisher
-import utility
-import env
+from patpat_viewer import finisher
+from patpat_viewer import utility
+from patpat_viewer import env
 
-
-def create_app(name="Patpat-viewer"):
-    flask = Flask(name)
-    Bootstrap5(flask)
-
-    return flask
+from patpat_viewer import app
 
 
-patpat_viewer = create_app()
-
-
-@patpat_viewer.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def home(env_=None):
     if request.method == 'POST':
 
@@ -63,11 +40,15 @@ def home(env_=None):
         return render_template('Home.html')
 
 
-@patpat_viewer.route('/tasktable', methods=['GET', 'POST'])
+@app.route('/tasktable/', methods=['GET'])
 def tasktable(pagination_num_per=10):
     configs = utility.config_process()
 
     pagination_num_per = pagination_num_per
+
+    if configs is None:
+        configs = "TaskTable is empty."
+        return redirect(url_for('empty', configs=configs))
 
     configs_group = utility.group_list(configs, pagination_num_per)
 
@@ -78,12 +59,27 @@ def tasktable(pagination_num_per=10):
                            page=page)
 
 
-@patpat_viewer.route('/tasktable/<uid>', methods=['GET'])
+@app.route('/tasktable/<uid>', methods=['GET', 'POST'])
 def task(
         uid,
         condition=None,
         pagination_num_per=10):
+    """
+
+    Args:
+        uid:
+        condition:
+        pagination_num_per:
+
+    Returns:
+
+    """
     uid = uid
+
+    if request.method == 'POST':
+        condition = request.form['condition']
+        pagination_num_per = request.form['pagination_num_per']
+
     if condition is None:
         condition = {'start': '',
                      'end': '',
@@ -120,10 +116,11 @@ def task(
                                pagination_num=pagination_num,
                                page=page)
     else:
-        return render_template('Empty.html')
+        configs = "This task is empty."
+        return redirect(url_for('empty', configs=configs))
 
 
-@patpat_viewer.route('/tasktable/<uid>/<accession>')
+@app.route('/tasktable/<uid>/<accession>')
 def dataset_page(uid, accession):
     uid = uid
     data_imported = finisher.ImportFinisher(uid).run()
@@ -131,17 +128,22 @@ def dataset_page(uid, accession):
     return render_template('Dataset.html', dataset=dataset)
 
 
-@patpat_viewer.route('/contact')
+@app.route('/contact')
 def contact():
     return render_template('Contact.html')
 
 
-@patpat_viewer.errorhandler(404)
+@app.route('/empty/<configs>')
+def empty(configs):
+    return render_template('Empty.html', configs=configs)
+
+
+@app.errorhandler(404)
 def page_not_found(*args):
     return render_template('404.html'), 404
 
 
-@patpat_viewer.route('/test')
+@app.route('/test')
 def test():
     return render_template('test.html')
 
@@ -175,16 +177,5 @@ def search():
     return render_template('Search.html')
 """
 
-if __name__ == '__main__':
-    patpat_viewer.run(debug=True)
-
-    """
-    from wsgiref import simple_server
-    host = '127.0.0.1'
-    port = 5000
-    print(f'Running on http://{host}:{port}')
-    app = simple_server.make_server(host=host, port=port, app=patpat_viewer)
-    app.serve_forever()
-    """
 
 
