@@ -24,20 +24,13 @@ from flask import render_template, request, redirect, url_for
 
 from patpat_viewer import finisher
 from patpat_viewer import utility
-from patpat_viewer import env
 
 from patpat_viewer import app
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def home(env_=None):
-    if request.method == 'POST':
-
-        env.set_env(env_)
-        return render_template('Home.html',
-                               env=env_)
-    else:
-        return render_template('Home.html')
+    return render_template('Home.html')
 
 
 @app.route('/tasktable/', methods=['GET'])
@@ -176,6 +169,3 @@ def search():
 
     return render_template('Search.html')
 """
-
-
-

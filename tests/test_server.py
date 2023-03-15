@@ -1,7 +1,9 @@
 import os
+
+from patpat_viewer import app
 from patpat_viewer import viewer
 
-
+# app.config['PATPAT_ENV'] = ''
 os.chdir('..')
 
 # Development Mode
