@@ -2,9 +2,9 @@
 import json
 import time
 
-from patpat_viewer import env
+from patpat_viewer import app
 
-PATPAT_ENV = env.get_env()
+PATPAT_ENV = app.config['PATPAT_ENV']
 
 
 def group_list(input_list: list, n: int):
