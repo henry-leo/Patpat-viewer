@@ -95,6 +95,7 @@ def task(
         key='previously').run()
 
     data_sorted = [data_imported[acc] for acc in acc_sorted]
+    time_max = filter
 
     pagination_num_per = pagination_num_per
     data_group = finisher.PaginateFinisher(
