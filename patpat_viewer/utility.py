@@ -2,7 +2,7 @@
 import json
 import time
 
-import env
+from patpat_viewer import env
 
 PATPAT_ENV = env.get_env()
 
@@ -46,9 +46,8 @@ def config_process():
             configs = json.loads(f.readline())
         f.close()
     except FileNotFoundError:
-        with open(f'{PATPAT_ENV}/logs/tasks.json', mode='w') as f:
-            pass
-        f.close()
+        configs = None
+        return configs
 
     configs = [i for i in configs['tasks'].values() if i.get('startTime')]
     configs.sort(reverse=True, key=lambda x: x['startTime'])

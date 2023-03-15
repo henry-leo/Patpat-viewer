@@ -14,7 +14,7 @@ def set_env(env=None):
 def get_env():
     global PATPAT_ENV
     if PATPAT_ENV is None:
-        PATPAT_ENV = '../patpat_env'
+        PATPAT_ENV = './patpat_env'
     return PATPAT_ENV
 
 
