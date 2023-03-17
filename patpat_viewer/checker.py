@@ -41,6 +41,10 @@ class Checker:
 class PRIDEChecker(Checker):
     """PRIDE数据库搜索结果检查器
 
+    Attributes:
+        source: str, 声明数据的来源
+        data_origin: dict, 未经整理的数据
+        data_checked: dict, 经过整理的数据
     """
 
     def __init__(self):
@@ -50,11 +54,15 @@ class PRIDEChecker(Checker):
         self.data_checked = None
 
     def load(self, data):
-        """"""
+        """导入数据
+
+        Args:
+            data: dict, 从Patpat生成的原始数据中挑选的来自PRIDE的数据
+        """
         self.data_origin = data[self.source]
 
     def check(self):
-        """"""
+        """整理数据"""
         data_checked = dict()
         data_origin = self._precheck()
 
@@ -80,10 +88,17 @@ class PRIDEChecker(Checker):
         self.data_checked = data_checked
 
     def get(self):
+        """获得经整理的数据"""
         if self.data_checked:
             return self.data_checked
 
     def _precheck(self):
+        """预检查数据
+        在整理之前检查数据是否完整
+
+        Returns:
+            data_origin: dict, 未经整理的数据
+        """
         if self.data_origin:
             data_origin = self.data_origin.copy()
         else:
@@ -98,6 +113,7 @@ class PRIDEChecker(Checker):
 
     @staticmethod
     def _check_title(data: dict):
+        """检查原始数据是否有标题"""
         d = data.copy()
         if d['title']:
             pass
@@ -110,6 +126,7 @@ class PRIDEChecker(Checker):
 
     @staticmethod
     def _check_time(data: dict):
+        """检查原始数据的时间时间格式，是否符合%Y-%m-%d"""
         d = data.copy()
         t = d['submissionDate']
         if t:
@@ -124,6 +141,7 @@ class PRIDEChecker(Checker):
 
     @staticmethod
     def _check_authors(data: dict):
+        """检查原始数据是否标注作者"""
         d = data.copy()
         try:
             a1 = [n['name'] for n in d['submitters']]
@@ -140,6 +158,10 @@ class PRIDEChecker(Checker):
 class IPROXChecker(Checker):
     """iProX数据库搜索结果检查器
 
+    Attributes:
+        source: str, 声明数据的来源
+        data_origin: dict, 未经整理的数据
+        data_checked: dict, 经过整理的数据
     """
 
     def __init__(self):
@@ -149,11 +171,15 @@ class IPROXChecker(Checker):
         self.data_checked = None
 
     def load(self, data):
-        """"""
+        """导入数据
+
+        Args:
+            data: dict, 从Patpat生成的原始数据中挑选的来自iProX的数据
+        """
         self.data_origin = data[self.source]
 
     def check(self):
-        """"""
+        """整理数据"""
         data_checked = dict()
         data_origin = self._precheck()
 
@@ -177,24 +203,32 @@ class IPROXChecker(Checker):
         self.data_checked = data_checked
 
     def get(self):
+        """获得经整理的数据"""
         if self.data_checked:
             return self.data_checked
 
     def _precheck(self):
+        """预检查数据
+        在整理之前检查数据是否完整
+
+        Returns:
+            data_origin: dict, 未经整理的数据
+        """
         if self.data_origin:
             data_origin = self.data_origin.copy()
         else:
             raise FileExistsError('No data. Please call PRIDEChecker.load().')
 
         for data in data_origin.values():
+            # iProX不检查时间，因为数据库API不提供时间属性
             self._check_title(data)
-            # self._check_time(data)
             self._check_authors(data)
 
         return data_origin
 
     @staticmethod
     def _check_title(data: dict):
+        """检查原始数据是否有标题"""
         d = data.copy()
         if d['title']:
             pass
@@ -206,21 +240,8 @@ class IPROXChecker(Checker):
             print(f"{d['accession']} title has some issues. show: {d['title']}")
 
     @staticmethod
-    def _check_time(data: dict):
-        d = data.copy()
-        t = d['submissionDate']
-        if t:
-            pass
-        else:
-            print(f"{d['accession']} no submissionDate")
-
-        if time.strftime('%Y-%m-%d', time.strptime(t, '%Y-%m-%d')) == t:
-            pass
-        else:
-            print(f"{d['accession']} submissionDate has some issues. show: {t}")
-
-    @staticmethod
     def _check_authors(data: dict):
+        """检查原始数据是否标注作者"""
         d = data.copy()
         try:
             a1 = [n['contactProperties'] for n in d['contacts']]
@@ -237,7 +258,13 @@ class IPROXChecker(Checker):
 
 
 class MASSIVEChecker(Checker):
-    # MassIVE数据库搜索结果检查器 **BETA**
+    """MassIVE数据库搜索结果检查器
+
+    Attributes:
+        source: str, 声明数据的来源
+        data_origin: dict, 未经整理的数据
+        data_checked: dict, 经过整理的数据
+    """
 
     def __init__(self):
         super().__init__()
@@ -246,11 +273,15 @@ class MASSIVEChecker(Checker):
         self.data_checked = None
 
     def load(self, data):
-        """"""
+        """导入数据
+
+        Args:
+            data: dict, 从Patpat生成的原始数据中挑选的来自PRIDE的数据
+        """
         self.data_origin = data[self.source]
 
     def check(self):
-        """"""
+        """整理数据"""
         data_checked = dict()
         data_origin = self._precheck()
 
@@ -275,11 +306,17 @@ class MASSIVEChecker(Checker):
         self.data_checked = data_checked
 
     def get(self):
+        """获得经整理的数据"""
         if self.data_checked:
             return self.data_checked
 
     def _precheck(self):
-        """"""
+        """预检查数据
+        在整理之前检查数据是否完整
+
+        Returns:
+            data_origin: dict, 未经整理的数据
+        """
         if self.data_origin:
             data_origin = self.data_origin.copy()
         else:
@@ -293,6 +330,7 @@ class MASSIVEChecker(Checker):
 
     @staticmethod
     def _check_title(data):
+        """检查原始数据是否有标题"""
         d = data.copy()
         if d['title']:
             pass
@@ -304,6 +342,7 @@ class MASSIVEChecker(Checker):
             print(f"{d['MASSIVE']['dataset_name']} title has some issues. show: {d['title']}")
 
     def _check_time(self, data: dict):
+        """检查原始数据的时间时间格式，是否符合%Y-%m-%d"""
         d = data.copy()
         time_ = d['MASSIVE']['create_time']
         title = d['MASSIVE']['dataset_name']
@@ -320,6 +359,7 @@ class MASSIVEChecker(Checker):
 
     @staticmethod
     def _check_authors(data: dict):
+        """检查原始数据是否标注作者"""
         d = data.copy()
         title = d['MASSIVE']['dataset_name']
         try:
@@ -333,7 +373,7 @@ class MASSIVEChecker(Checker):
 
     @staticmethod
     def refine_time(input_time):
-        """
+        """更改MassIVE提供的时间格式
 
         Args:
             input_time: str, origin MassIVE create_time (%Y-%m-%d %H:%M:%S.0)
@@ -348,7 +388,15 @@ class MASSIVEChecker(Checker):
 
     @staticmethod
     def find_targets(input_target: dict, mode: str):
-        """"""
+        """检查 MassIVE数据获取的依据
+
+        Args:
+            input_target: dict, 描述patpat搜索到该数据的依据。共有两个key：protein和peptides
+            mode: str, 选择需要检查的模式
+
+        Returns:
+
+        """
         if mode == 'protein':
             try:
                 return input_target['protein']

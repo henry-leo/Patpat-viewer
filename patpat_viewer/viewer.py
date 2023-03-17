@@ -1,22 +1,5 @@
-"""Patpat-viewer APP
+"""Patpat-viewer APP Views
     This APP Power by Flask
-
-    Typical usage example:
-    典型用法示例：
-
-    # Development Mode
-
-    patpat_viewer.run(debug=True)
-
-    # Production Mode
-
-    from wsgiref import simple_server
-
-    host = '127.0.0.1'
-    port = 5000
-    print(f'Running on http://{host}:{port}')
-    app = simple_server.make_server(host=host, port=port, app=patpat_viewer)
-    app.serve_forever()
 """
 import re
 
@@ -153,19 +136,4 @@ def choose_page(groups):
     return this_page_data, pagination_num, page
 
 
-"""
-@app.route('/search', methods=['GET', 'POST'])
-def search():
 
-    if request.method == 'POST':
-        identifier = request.form.get('identifier')
-        q = hub.QueryHub()
-        protein_id = identifier
-        q.identifier = protein_id
-        q.simple_query()
-
-        return redirect(url_for('tasktable'), code=301)
-        # redirect(url_for('search_loading', identifier=identifier), code=301)
-
-    return render_template('Search.html')
-"""

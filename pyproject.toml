@@ -30,4 +30,4 @@ classifiers = [
 include-package-data = true
 
 [tool.setuptools.packages.find]
-where = ["patpat_env"]
+where = ["patpat-viewer"]

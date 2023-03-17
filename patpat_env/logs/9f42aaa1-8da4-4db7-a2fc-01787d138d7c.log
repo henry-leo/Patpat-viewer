@@ -1,4 +1,0 @@
-2022-11-28 18:52:18,414	INFO	mapper	mapping	Select PRIDE to search.
-2022-11-28 18:52:18,414	INFO	mapper	mapping2peptides	Find 8 peptides all.
-2022-11-28 18:52:19,953	INFO	retriever	retrieve	query:AALFVAPCLILIK
-2022-11-28 18:52:19,953	ERROR	hub	mapping	RUNNING ERROR
