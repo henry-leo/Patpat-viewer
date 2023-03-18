@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "patpat-viewer"
-version = "0.0.0"
+version = ""
 authors = [
     { name = "Weiheng Liao", email = "weiheng_liao@outlook.com" },
     { name = "Minyan Mo", email = "ixxssue@outlook.com"}
@@ -30,4 +30,4 @@ classifiers = [
 include-package-data = true
 
 [tool.setuptools.packages.find]
-where = ["patpat_env"]
+where = ["patpat-viewer"]
