@@ -131,7 +131,7 @@ class SortFinisher:
 class PaginateFinisher:
     """"""
 
-    def __init__(self, data: {list, dict}=None, run_per_page=5):
+    def __init__(self, data: {list, dict} = None, run_per_page=5):
         self.pagination = None
         self.groups = list()
         self.run_per_page = run_per_page
@@ -154,15 +154,25 @@ class PaginateFinisher:
         return self.groups
 
 
-class FilterBox:
+class FBoxM:
     def __init__(self):
         self.time = '0001-01-01'
+        self.mintime = '2030-01-01'
 
     def cmpt_max(self, data: list):
         for d in data:
-            timestr1 = time.strptime(self.time, '%Y-%m-%d')
+            timestr = time.strptime(self.time, '%Y-%m-%d')
             timestr2 = time.strptime(d['time'], '%Y-%m-%d')
-            if timestr1 > timestr2:
+            if timestr > timestr2:
                 pass
             else:
                 self.time = d['time']
+
+    def cmpt_min(self, data: list):
+        for d in data:
+            timestr = time.strptime(self.mintime, '%Y-%m-%d')
+            timestr2 = time.strptime(d['time'], '%Y-%m-%d')
+            if timestr < timestr2:
+                pass
+            else:
+                self.mintime = d['time']

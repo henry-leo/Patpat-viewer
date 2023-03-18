@@ -234,30 +234,4 @@ class KeywordFilter(Filter):
             return True
 
 
-class FBox:
-    def __init__(self):
-        self.time = '0001-01-01'
 
-    def cmp_max(self, data: list):
-        for d in data:
-            timestr = time.strptime(self.time, '%Y-%m-%d')
-            timestr2 = time.strptime(d['time'], '%Y-%m-%d')
-            if timestr > timestr2:
-                pass
-            else:
-                self.time = d['time']
-
-
-class FBoxi:
-    def __init__(self):
-        self.timemax = '0001-01-01'
-        self.timemin = '2030-01-01'
-
-    def cmp_min(self, data: list):
-        for d in data:
-            timestr = time.strptime(self.time, '%Y-%m-%d')
-            timestr2 = time.strptime(d['time'], '%Y-%m-%d')
-            if timestr < timestr2:
-                pass
-            else:
-                self.time = d['time']

@@ -95,7 +95,11 @@ def task(
         key='previously').run()
 
     data_sorted = [data_imported[acc] for acc in acc_sorted]
-    time_max = filter
+    am = finisher.FBoxM()
+    am.cmpt_max(data=data_sorted)
+    cmptmax = am.time[0:4]
+    am.cmpt_min(data=data_sorted)
+    cmptmin = am.mintime[0:4]
 
     pagination_num_per = pagination_num_per
     data_group = finisher.PaginateFinisher(
@@ -108,7 +112,9 @@ def task(
                                uid=uid,
                                datasets=this_page_data,
                                pagination_num=pagination_num,
-                               page=page)
+                               page=page,
+                               cmptmax=cmptmax,
+                               cmptmin=cmptmin)
     else:
         configs = "This task is empty."
         return redirect(url_for('empty', configs=configs))
