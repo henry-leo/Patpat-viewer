@@ -94,7 +94,7 @@ class YearFilter(Filter):
 
             accession = self.given['accession'].copy()
             for acc in accession:
-                target = self.given['datasets'][acc]['maxtime']
+                target = self.given['datasets'][acc]['time']
                 if target:
                     target = time.strptime(target, '%Y-%m-%d')
                     if sorted([target, start, end])[1] != target:

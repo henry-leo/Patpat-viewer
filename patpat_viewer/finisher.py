@@ -164,21 +164,43 @@ class FBoxM:
 
     def cmpt_max(self):
         for d in self.data:
-            timestr = time.strptime(self.maxtime, '%Y-%m-%d')
-            timestr2 = time.strptime(d['maxtime'], '%Y-%m-%d')
-            if timestr > timestr2:
+            timestr1 = self.format_time(self.maxtime, 'max')
+            timestr2 = self.format_time(d['time'], 'max')
+
+            if timestr1 > timestr2:
                 pass
             else:
-                self.maxtime = d['maxtime']
+                self.maxtime = d['time']
 
     def cmpt_min(self):
         for d in self.data:
-            timestr = time.strptime(self.mintime, '%Y-%m-%d')
-            timestr2 = time.strptime(d['maxtime'], '%Y-%m-%d')
-            if timestr < timestr2:
+            timestr1 = self.format_time(self.mintime, 'min')
+            timestr2 = self.format_time(d['time'], 'min')
+            if timestr1 < timestr2:
                 pass
             else:
-                self.mintime = d['maxtime']
+                self.mintime = d['time']
+
+    @staticmethod
+    def format_time(t, mode='max'):
+        """格式化时间
+
+        Args:
+            t: str, time, 'yyyy-mm-dd'
+            mode: str, 'max' | 'min', 决定跳过的方式，如果为'max'，则时间为'0001-01-01'，在比谁大的比赛中肯定会被pass
+
+        Returns:
+            t: time.struct_time, formatted time
+        """
+        # 若无时间则跳过
+        try:
+            t = time.strptime(t, '%Y-%m-%d')
+        except TypeError:
+            if mode == 'max':
+                t = time.strptime('0001-01-01', '%Y-%m-%d')
+            elif mode == 'min':
+                t = time.strptime('2999-12-31', '%Y-%m-%d')
+        return t
 
     def get_databases(self):
         database = set()

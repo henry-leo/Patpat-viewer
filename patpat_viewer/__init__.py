@@ -26,4 +26,3 @@ app.config['PATPAT_ENV'] = PATPAT_ENV
 
 from patpat_viewer import viewer
 
-

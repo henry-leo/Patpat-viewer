@@ -79,13 +79,13 @@ def task(
 
     data_sorted = [data_imported[acc] for acc in acc_sorted]
 
-    am = finisher.FBoxM(data=data_sorted)
-    am.run_box()
-    am_ = {
-        'maxtime': am.maxtime,
-        'mintime': am.mintime,
-        'databases': am.databases,
-        'keywords': am.keywords
+    box = finisher.FBoxM(data=data_sorted)
+    box.run_box()
+    box_ = {
+        'maxtime': box.maxtime,
+        'mintime': box.mintime,
+        'databases': box.databases,
+        'keywords': box.keywords
     }
 
     pagination_num_per = pagination_num_per
@@ -100,7 +100,7 @@ def task(
                                datasets=this_page_data,
                                pagination_num=pagination_num,
                                page=page,
-                               am=am_)
+                               box=box_)
     else:
         configs = "This task is empty."
         return redirect(url_for('empty', configs=configs))
@@ -129,9 +129,12 @@ def page_not_found(*args):
     return render_template('404.html'), 404
 
 
-@app.route('/test')
+@app.route('/test', methods=['GET', 'POST'])
 def test():
-    return render_template('test.html')
+    if request.method == 'POST':
+        u = request.form.get('aaa')
+        return render_template('test2.html', u=u)
+    return render_template('test2.html')
 
 
 def choose_page(groups):
