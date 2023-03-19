@@ -72,7 +72,7 @@ class PRIDEChecker(Checker):
                 'title': data_origin[idr]['title'],
                 'database': 'PRIDE',
                 'identifier': data_origin[idr]['accession'],
-                'time': data_origin[idr]['submissionDate'],
+                'maxtime': data_origin[idr]['submissionDate'],
                 'authors': set(
                     [n['name'].upper().capitalize() for n in data_origin[idr]['submitters']] +
                     [n['name'].upper().capitalize() for n in data_origin[idr]['labPIs']]
@@ -189,7 +189,7 @@ class IPROXChecker(Checker):
                 'title': data_origin[idr]['title'],
                 'database': 'iProX',
                 'identifier': data_origin[idr]['accession']['value'],
-                'time': None,
+                'maxtime': None,
                 'authors': set([j['contactProperties'][1]['value'] for j in
                                 [i for i in data_origin[idr]['contacts']]
                                 if j['contactProperties'][1]['name'] == 'contact name']),
@@ -292,7 +292,7 @@ class MASSIVEChecker(Checker):
                 'database': 'MassIVE',
                 'identifier': f"{data_origin[idr]['MASSIVE']['dataset_name']}/"
                               f"{data_origin[idr]['MASSIVE']['origin_identifier']}",
-                'time': self.refine_time(data_origin[idr]['MASSIVE']['create_time']),
+                'maxtime': self.refine_time(data_origin[idr]['MASSIVE']['create_time']),
                 'authors': set([i[1]['value'] for i in data_origin[idr]['PROXI']['contacts']
                                 if i[1]['name']
                                 ]),

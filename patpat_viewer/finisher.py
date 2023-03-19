@@ -131,7 +131,7 @@ class SortFinisher:
 class PaginateFinisher:
     """"""
 
-    def __init__(self, data: {list, dict} = None, run_per_page=5):
+    def __init__(self, data: {list, dict}=None, run_per_page=5):
         self.pagination = None
         self.groups = list()
         self.run_per_page = run_per_page
@@ -155,24 +155,50 @@ class PaginateFinisher:
 
 
 class FBoxM:
-    def __init__(self):
-        self.time = '0001-01-01'
-        self.mintime = '2030-01-01'
+    def __init__(self, data: list):
+        self.data = data
+        self.maxtime = '0001-01-01'
+        self.mintime = '2999-12-31'
+        self.databases = []
+        self.keywords = []
 
-    def cmpt_max(self, data: list):
-        for d in data:
-            timestr = time.strptime(self.time, '%Y-%m-%d')
-            timestr2 = time.strptime(d['time'], '%Y-%m-%d')
+    def cmpt_max(self):
+        for d in self.data:
+            timestr = time.strptime(self.maxtime, '%Y-%m-%d')
+            timestr2 = time.strptime(d['maxtime'], '%Y-%m-%d')
             if timestr > timestr2:
                 pass
             else:
-                self.time = d['time']
+                self.maxtime = d['maxtime']
 
-    def cmpt_min(self, data: list):
-        for d in data:
+    def cmpt_min(self):
+        for d in self.data:
             timestr = time.strptime(self.mintime, '%Y-%m-%d')
-            timestr2 = time.strptime(d['time'], '%Y-%m-%d')
+            timestr2 = time.strptime(d['maxtime'], '%Y-%m-%d')
             if timestr < timestr2:
                 pass
             else:
-                self.mintime = d['time']
+                self.mintime = d['maxtime']
+
+    def get_databases(self):
+        database = set()
+        for d in self.data:
+            database.add(d['database'])
+
+        self.databases = list(database)
+
+    def get_keywords(self):
+        keywords = set()
+        for d in self.data:
+            for w in d['keywords']:
+                keywords.add(w)
+
+        self.keywords = list(keywords)
+
+    def run_box(self):
+        self.cmpt_max()
+        self.cmpt_min()
+        self.get_databases()
+        self.get_keywords()
+
+
