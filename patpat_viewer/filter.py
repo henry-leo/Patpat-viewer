@@ -222,7 +222,7 @@ class KeywordFilter(Filter):
 
     def _condition_check(self):
         """如果输入的字典格式不符合要求"""
-        if not isinstance(self.given['condition']['keywords'], list) or\
+        if not isinstance(self.given['condition']['keywords'], list) or \
                 'keywords' not in self.given['condition']:
             print(f"Filter condition are mistake: {self.given['condition']}")
             return self.given
@@ -232,3 +232,6 @@ class KeywordFilter(Filter):
         else:
             # 表明可以进行筛选
             return True
+
+
+
