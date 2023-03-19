@@ -36,7 +36,7 @@ def get_result_from_file(task=None):
 
 
 def print_sorted(data, acc):
-    v = [data[i]['maxtime'] for i in acc]
+    v = [data[i]['time'] for i in acc]
     print(v)
 
 
