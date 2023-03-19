@@ -5,109 +5,121 @@
 {% import 'macro.html' as macro with context %}
 
 
+<div class="d-lg-flex flex-nowrap">
+    <div class="row">
 
+        <div class="col-lg-3">
+            <div class="card my-1 p-3 border-0" style="max-height: 50rem">
+                <div class="card-body">
+                    <h5 class="card-title text-center" style="font-weight:bold">筛选框</h5>
 
-
-<div class="col-lg-2">
-
-
-    <div class="card my-3 p-3 offset-md-2" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title text-center" style="font-weight:bold">筛选框</h5>
-
-            <div class="container my-3">
-                <h6><b>时间</b></h6>
-                <div style="width:18px color:info">
-                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75"
-                         aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 75%"></div>
+                    <div class="container my-3">
+                        <b>分页</b>
+                        <p class="card-text">您想要每页展示（）条数据</p>
                     </div>
-                    <div class="row"><b>{{cmptmax}}        {{cmptmin}}</b><b style="text-align:right"></b></div>
 
-                    <div class="offset-10"></div>
-                </div>
-            </div>
+                    <div class="container my-3">
+                        <h6><b>时间</b></h6>
+                        <div style="width:18px color:info">
+                            <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75"
+                                 aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                     style="width: 75%"></div>
+                            </div>
+                            <div class="row"><b>{{cmptmax}} {{cmptmin}}</b><b style="text-align:right"></b></div>
 
-            <div class="container my-3">
-                <b>keywords</b>
-                <div class="my-1">
-                    <div class="mb-3">
-                        <label class="form-check mb-1">
-                            <input type="checkbox" class="form-check-input" name="form-tags[]" value="business"
-                                   checked="">
-                            <span class="form-check-label">Missing proteins</span>
-                        </label>
-                        <label class="form-check mb-1">
-                            <input type="checkbox" class="form-check-input" name="form-tags[]" value="evening">
-                            <span class="form-check-label">evening</span>
-                        </label>
-                        <label class="form-check mb-1">
-                            <input type="checkbox" class="form-check-input" name="form-tags[]" value="leisure">
-                            <span class="form-check-label">leisure</span>
-                        </label>
-                        <label class="form-check mb-1">
-                            <input type="checkbox" class="form-check-input" name="form-tags[]" value="party">
-                            <span class="form-check-label">party</span>
-                        </label>
+                            <div class="offset-10"></div>
+                        </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="container my-3">
-                <b>选择库源</b>
-                <div>
-                    <label class="form-check mb-1">
-                        <input type="radio" class="form-check-input" name="form-stars" value="5 stars" checked="">
-                        <span class="form-check-label">PRIDE</span>
-                    </label>
-                    <label class="form-check mb-1">
-                        <input type="radio" class="form-check-input" name="form-stars" value="5 stars" checked="">
-                        <span class="form-check-label">iProX</span>
-                    </label>
-                </div>
-            </div>
+                                        <div class="container my-3">
+                        <b>选择库源</b>
+                        <div>
+                            <label class="form-check mb-1">
+                                <input type="radio" class="form-check-input" name="form-stars" value="5 stars"
+                                       checked="">
+                                <span class="form-check-label">PRIDE</span>
+                            </label>
+                            <label class="form-check mb-1">
+                                <input type="radio" class="form-check-input" name="form-stars" value="5 stars"
+                                       checked="">
+                                <span class="form-check-label">iProX</span>
+                            </label>
+                        </div>
+                    </div>
 
-            <div class="container my-3">
-                <b>分页</b>
-                <p class="card-text">您想要每页展示（）条数据</p>
-                <a href="#" class="btn btn-primary ">确定</a>
+                    <div class="container my-3">
+                        <b>keywords</b>
+                        <div class="my-1">
+                            <div class="mb-3">
+                                <label class="form-check mb-1">
+                                    <input type="checkbox" class="form-check-input" name="form-tags[]" value="business"
+                                           checked="">
+                                    <span class="form-check-label">Missing proteins</span>
+                                </label>
+                                <label class="form-check mb-1">
+                                    <input type="checkbox" class="form-check-input" name="form-tags[]" value="evening">
+                                    <span class="form-check-label">evening</span>
+                                </label>
+                                <label class="form-check mb-1">
+                                    <input type="checkbox" class="form-check-input" name="form-tags[]" value="leisure">
+                                    <span class="form-check-label">leisure</span>
+                                </label>
+                                <label class="form-check mb-1">
+                                    <input type="checkbox" class="form-check-input" name="form-tags[]" value="party">
+                                    <span class="form-check-label">party</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container my-3">
+                        <div class="row-cols-2">
+                            <a href="#" class="btn btn-success border-0">
+                                <span class="font-monospace fw-bold">Submit</span>
+                            </a>
+                            <a href="#" class="btn btn-outline-secondary border-0">
+                                <span class="font-monospace fw-bold">Reset all</span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
 
-    </div>
-</div>
-
-
-    {% for dataset in datasets %}
-
-<div class="col-lg-9 offset-3">
-<div class="card card-lg p-3 m-3">
-    <div class="card-body ">
-        <div class="container-lg fs-4 m-3">
-            <a class="fw-bold text-decoration-none" href="/tasktable/{{ uid }}/{{ dataset['accession'] }}"
-               style="color: #0071bc">
-                {{ dataset['title'] }}
-            </a>
-        </div>
-        <div class="container-lg m-3">
-            <div class="col">
-                <div class="row">
-                    <div>
-                        {% for i in dataset['authors'] %}
-                        {{ i+',' }}
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="row" style="color: #4d8070">
-                    <div>
-                        <b>{{ dataset['database'] }}. </b>{{ dataset['time'] }}.
-                        Accession: {{ dataset['identifier'] }}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container-lg m-3"
-             style="display: -webkit-box;
+        <div class="col-lg-8 mx-3">
+            <div class="list-group list-group-flush overflow-auto" style="max-height: 40rem">
+                {% for dataset in datasets %}
+                <div class="list-group-item">
+                    <div class="card card-lg p-3 my-3 border-0 shadow">
+                        <div class="card-body ">
+                            <div class="container-lg fs-4 m-3">
+                                <a class="fw-bold text-decoration-none"
+                                   href="/tasktable/{{ uid }}/{{ dataset['accession'] }}"
+                                   style="color: #0071bc">
+                                    {{ dataset['title'] }}
+                                </a>
+                            </div>
+                            <div class="container-lg m-3">
+                                <div class="col">
+                                    <div class="row">
+                                        <div>
+                                            {% for i in dataset['authors'] %}
+                                            {{ i+',' }}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="row" style="color: #4d8070">
+                                        <div>
+                                            <b>{{ dataset['database'] }}. </b>{{ dataset['time'] }}.
+                                            Accession: {{ dataset['identifier'] }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container-lg m-3"
+                                 style="display: -webkit-box;
                     overflow: hidden;
                     white-space: normal !important;
                     text-overflow: ellipsis;
@@ -115,79 +127,83 @@
                     -webkit-line-clamp:5;
                     -webkit-box-orient: vertical">
 
-            {{ dataset['summary'] }}
+                                {{ dataset['summary'] }}
 
-        </div>
-        <div class="container-lg m-3">
-            <!-- Keywords -->
-            <div class="row">
-                <div class="col-lg-1">
-                    <b>Keyword</b>
-                </div>
-                <div class="col-lg-8 text-truncate text-secondary">
-                    {% for keyword in dataset['keywords'] %}
-                    {{ keyword }};
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col col-auto">
-                    <abbr class="text-warning"
-                          title="The term 'protein level' refers to results obtained by searching using UniProt
+                            </div>
+                            <div class="container-lg m-3">
+                                <!-- Keywords -->
+                                <div class="row">
+                                    <div class="col-lg-auto text-nowrap">
+                                        <b>Keyword</b>
+                                    </div>
+                                    <div class="col-lg-8 text-truncate text-secondary">
+                                        {% for keyword in dataset['keywords'] %}
+                                        {{ keyword }};
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col col-auto">
+                                        <abbr class="text-warning"
+                                              title="The term 'protein level' refers to results obtained by searching using UniProt
                           identifiers, while 'peptides level' refers to results obtained by searching using peptide
                           sequences. Search results that exist at that level are shown in green, while those that do not
                            are shown in grey.">
-                        <strong>?</strong>
-                    </abbr>
-                </div>
-                <div class="col col-auto">
-                    <ul class="list-inline list-inline-dots">
-                        <li class="list-inline-item">
-                            {% if dataset['protein'] %}
-                            <div class="badge bg-success">Protein Level</div>
-                            {% else %}
-                            <div class="badge bg-secondary ">Protein Level</div>
-                            {% endif %}
+                                            <strong>?</strong>
+                                        </abbr>
+                                    </div>
+                                    <div class="col col-auto">
+                                        <ul class="list-inline list-inline-dots">
+                                            <li class="list-inline-item">
+                                                {% if dataset['protein'] %}
+                                                <div class="badge bg-success">Protein Level</div>
+                                                {% else %}
+                                                <div class="badge bg-secondary ">Protein Level</div>
+                                                {% endif %}
 
-                        </li>
-                        <li class="list-inline-item">
-                            {% if dataset['peptides'] %}
-                            <div class="badge bg-success ">Peptides Level</div>
-                            {% else %}
-                            <div class="badge bg-secondary ">Peptides Level</div>
-                            {% endif %}
-                        </li>
-                    </ul>
-                </div>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                {% if dataset['peptides'] %}
+                                                <div class="badge bg-success ">Peptides Level</div>
+                                                {% else %}
+                                                <div class="badge bg-secondary ">Peptides Level</div>
+                                                {% endif %}
+                                            </li>
+                                        </ul>
+                                    </div>
 
 
-                    <div class="col col-auto">|</div>
+                                    <div class="col col-auto">|</div>
 
-                    <div class="col col-auto">
-                        <a href="{{ dataset['website'] }}" class="text-secondary" target="_blank">
-                            <strong>
-                                Go to Source
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
-                                     class="bi bi-arrow-up-right-square" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd"
-                                          d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm5.854 8.803a.5.5 0 1 1-.708-.707L9.243 6H6.475a.5.5 0 1 1 0-1h3.975a.5.5 0 0 1 .5.5v3.975a.5.5 0 1 1-1 0V6.707l-4.096 4.096z"/>
-                                </svg>
-                            </strong>
-                        </a>
+                                    <div class="col col-auto">
+                                        <a href="{{ dataset['website'] }}" class="text-secondary" target="_blank">
+                                            <strong>
+                                                Go to Source
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                                     fill="currentColor"
+                                                     class="bi bi-arrow-up-right-square" viewBox="0 0 16 16">
+                                                    <path fill-rule="evenodd"
+                                                          d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm5.854 8.803a.5.5 0 1 1-.708-.707L9.243 6H6.475a.5.5 0 1 1 0-1h3.975a.5.5 0 0 1 .5.5v3.975a.5.5 0 1 1-1 0V6.707l-4.096 4.096z"/>
+                                                </svg>
+                                            </strong>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
         </div>
+
     </div>
 </div>
-{% endfor %}
-
 <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center">
         {{ macro.page_nav(page, pagination_num[-1], uid) }}
     </ul>
 </nav>
-
 {% endblock %}
