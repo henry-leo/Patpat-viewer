@@ -20,7 +20,7 @@ class SubmitSorter(Sorter):
         target = dict()
         for acc in self.accession:
             try:
-                target[acc] = time.strptime(self.datasets[acc]['time'], '%Y-%m-%d')
+                target[acc] = time.strptime(self.datasets[acc]['maxtime'], '%Y-%m-%d')
             except TypeError:
                 # iProX没有时间属性，这里设为默认时间1970-01-01
                 target[acc] = time.strptime('1970-01-01', '%Y-%m-%d')
