@@ -110,7 +110,7 @@ class YearFilter(Filter):
 
     def _condition_check(self):
         """如果输入的字典格式不符合要求"""
-        if 'start' or 'end' not in self.given['condition']:
+        if 'start' not in self.given['condition'] or 'end' not in self.given['condition']:
             print(f"Filter condition are mistake: {self.given['condition']}")
             return self.given
 

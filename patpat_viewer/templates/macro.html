@@ -222,11 +222,25 @@
 
 {% if page != 1 %}
 <li class="page-item">
-    <a class="page-link text-black" href="/tasktable{{ router }}?p{{ page-1 }}"><<</a>
+    <a class="page-link text-black" href="/tasktable{{ router }}?p{{ page-1 }}">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="20" height="20" viewBox="0 0 24 24" stroke-width="2"
+             stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <polyline points="15 6 9 12 15 18"/>
+        </svg>
+        <span class="">prev</span>
+    </a>
 </li>
 {% else %}
 <li class="page-item">
-    <a class="page-link text-black" href="/tasktable{{ router }}?p1"><<</a>
+    <a class="page-link text-black" href="/tasktable{{ router }}?p1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="20" height="20" viewBox="0 0 24 24" stroke-width="2"
+             stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <polyline points="15 6 9 12 15 18"/>
+        </svg>
+        <span class="">prev</span>
+    </a>
 </li>
 {% endif %}
 
@@ -280,11 +294,25 @@
 
 {% if page != page_num %}
 <li class="page-item">
-    <a class="page-link text-black" href="/tasktable{{ router }}?p{{ page+1 }}">>></a>
+    <a class="page-link text-black" href="/tasktable{{ router }}?p{{ page+1 }}">
+        next
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="20" height="20" viewBox="0 0 24 24" stroke-width="2"
+             stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <polyline points="9 6 15 12 9 18"/>
+        </svg>
+    </a>
 </li>
 {% else %}
 <li class="page-item">
-    <a class="page-link text-black" href="/tasktable{{ router }}?p{{ page_num }}">>></a>
+    <a class="page-link text-black" href="/tasktable{{ router }}?p{{ page_num }}">
+        next
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="20" height="20" viewBox="0 0 24 24" stroke-width="2"
+             stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <polyline points="9 6 15 12 9 18"/>
+        </svg>
+    </a>
 </li>
 {% endif %}
 {% endmacro %}

@@ -172,6 +172,8 @@ class FBoxM:
             else:
                 self.maxtime = d['time']
 
+        self.maxtime = time.strftime('%Y', self.format_time(self.maxtime, 'max'))
+
     def cmpt_min(self):
         for d in self.data:
             timestr1 = self.format_time(self.mintime, 'min')
@@ -180,6 +182,8 @@ class FBoxM:
                 pass
             else:
                 self.mintime = d['time']
+
+        self.mintime = time.strftime('%Y', self.format_time(self.mintime, 'min'))
 
     @staticmethod
     def format_time(t, mode='max'):

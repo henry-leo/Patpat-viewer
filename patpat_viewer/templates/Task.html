@@ -11,79 +11,115 @@
         <div class="col-lg-3">
             <div class="card my-1 p-3 border-0" style="max-height: 50rem">
                 <div class="card-body">
-                    <h5 class="card-title text-center" style="font-weight:bold">筛选框</h5>
+                    <form method="post">
 
-                    <div class="container my-3">
-                        <b>分页</b>
-                        <p class="card-text">您想要每页展示（）条数据</p>
-                    </div>
-
-                    <div class="container my-3">
-                        <h6><b>时间</b></h6>
-                        <div style="width:18px color:info">
-                            <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75"
-                                 aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated"
-                                     style="width: 75%"></div>
+                        <div class="row border-bottom">
+                            <div class="col fs-5 fw-light text-nowrap">DATASET FILTER</div>
+                            <div class="col">
+                                <label for="paginationSelect"></label>
+                                <select class="form-select border-0 fw-light" name="pagination_num_per"
+                                        id="paginationSelect">
+                                    <option value="5">5 / Page</option>
+                                    <option value="10">10 / Page</option>
+                                    <option value="20">20 / Page</option>
+                                </select>
                             </div>
-                            <div class="row"><b>{{cmptmax}} {{cmptmin}}</b><b style="text-align:right"></b></div>
-
-                            <div class="offset-10"></div>
                         </div>
-                    </div>
 
-                                        <div class="container my-3">
-                        <b>选择库源</b>
-                        <div>
-                            <label class="form-check mb-1">
-                                <input type="radio" class="form-check-input" name="form-stars" value="5 stars"
-                                       checked="">
-                                <span class="form-check-label">PRIDE</span>
-                            </label>
-                            <label class="form-check mb-1">
-                                <input type="radio" class="form-check-input" name="form-stars" value="5 stars"
-                                       checked="">
-                                <span class="form-check-label">iProX</span>
-                            </label>
+                        <div class="container my-3">
+                            <span class="fs-6 fw-light">BY YEAR</span>
+                            <!--必须同时选择开始时间和结束时间才能生效-->
+                            <div class="row row-cols-3 my-2 align-self-baseline">
+                                <div class="col">
+                                    <label for="startYearSelect"></label>
+                                    <select class="fw-light" id="startYearSelect" name="starttime">
+                                        <option value="">None</option>
+                                        {% for y in range(box['mintime'], box['maxtime']+1) %}
+                                        <option value="{{ y }}">{{ y }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col text-center fw-light">TO</div>
+                                <div class="col">
+                                    <label for="endYearSelect"></label>
+                                    <select class="fw-light" id="endYearSelect" name="endtime">
+                                        <option value="">None</option>
+                                        {% for y in range(box['mintime'], box['maxtime']+1) %}
+                                        <option value="{{ y }}">{{ y }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="container my-3">
-                        <b>keywords</b>
-                        <div class="my-1">
-                            <div class="mb-3">
+                        <div class="container my-3 text-left ">
+                            <a class="w-100 text-dark text-decoration-none border-0 "
+                               type="button"
+                               data-bs-toggle="collapse"
+                               data-bs-target="#databaseSelect">
+                                <span class="fw-light">BY SOURCE</span>
+                            </a>
+                            <div class="collapse" id="databaseSelect">
                                 <label class="form-check mb-1">
-                                    <input type="checkbox" class="form-check-input" name="form-tags[]" value="business"
+                                    <input type="radio" class="form-check-input" name="form-stars" value="5 stars"
                                            checked="">
-                                    <span class="form-check-label">Missing proteins</span>
+                                    <span class="form-check-label">PRIDE</span>
                                 </label>
                                 <label class="form-check mb-1">
-                                    <input type="checkbox" class="form-check-input" name="form-tags[]" value="evening">
-                                    <span class="form-check-label">evening</span>
-                                </label>
-                                <label class="form-check mb-1">
-                                    <input type="checkbox" class="form-check-input" name="form-tags[]" value="leisure">
-                                    <span class="form-check-label">leisure</span>
-                                </label>
-                                <label class="form-check mb-1">
-                                    <input type="checkbox" class="form-check-input" name="form-tags[]" value="party">
-                                    <span class="form-check-label">party</span>
+                                    <input type="radio" class="form-check-input" name="form-stars" value="5 stars"
+                                           checked="">
+                                    <span class="form-check-label">iProX</span>
                                 </label>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="container my-3">
-                        <div class="row-cols-2">
-                            <a href="#" class="btn btn-success border-0">
-                                <span class="font-monospace fw-bold">Submit</span>
+                        <div class="container my-3 text-left ">
+                            <a class="w-100 text-dark text-decoration-none border-0 "
+                               type="button"
+                               data-bs-toggle="collapse"
+                               data-bs-target="#keywordSelect">
+                                <span class="fw-light">BY KEYWORD</span>
                             </a>
-                            <a href="#" class="btn btn-outline-secondary border-0">
-                                <span class="font-monospace fw-bold">Reset all</span>
-                            </a>
+                            <div class="collapse" id="keywordSelect">
+                                    <label class="form-check mb-1">
+                                        <input type="checkbox" class="form-check-input" name="form-tags[]"
+                                               value="business"
+                                               checked="">
+                                        <span class="form-check-label">Missing proteins</span>
+                                    </label>
+                                    <label class="form-check mb-1">
+                                        <input type="checkbox" class="form-check-input" name="form-tags[]"
+                                               value="evening">
+                                        <span class="form-check-label">evening</span>
+                                    </label>
+                                    <label class="form-check mb-1">
+                                        <input type="checkbox" class="form-check-input" name="form-tags[]"
+                                               value="leisure">
+                                        <span class="form-check-label">leisure</span>
+                                    </label>
+                                    <label class="form-check mb-1">
+                                        <input type="checkbox" class="form-check-input" name="form-tags[]"
+                                               value="party">
+                                        <span class="form-check-label">party</span>
+                                    </label>
+                            </div>
                         </div>
-                    </div>
 
+                        <div class="container my-3">
+                            <div class="row-cols-2">
+
+                                <button class="btn btn-success border-0" type="submit">
+                                    <span class="fw-bold">Submit</span>
+                                </button>
+
+                                <a href="/tasktable/{{ uid }}" class="btn btn-outline-secondary border-0">
+                                    <span class="">Reset</span>
+                                </a>
+                            </div>
+                        </div>
+
+                    </form>
                 </div>
             </div>
         </div>
@@ -201,9 +237,12 @@
 
     </div>
 </div>
-<nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center">
-        {{ macro.page_nav(page, pagination_num[-1], uid) }}
-    </ul>
-</nav>
+<div class="d-flex my-3 justify-content-center">
+    <nav aria-label="Page navigation">
+        <ul class="pagination ">
+            {{ macro.page_nav(page, pagination_num[-1], uid) }}
+        </ul>
+    </nav>
+</div>
 {% endblock %}
+

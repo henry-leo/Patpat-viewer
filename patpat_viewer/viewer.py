@@ -53,10 +53,27 @@ def task(
     uid = uid
 
     if request.method == 'POST':
-        condition = request.form['condition']
-        pagination_num_per = request.form['pagination_num_per']
+        condition = dict()
+        if request.form.get('starttime'):
+            condition['start'] = request.form.get('starttime')
+        else:
+            condition['start'] = ''
+        if request.form.get('endtime'):
+            condition['end'] = request.form.get('endtime')
+        else:
+            condition['end'] = ''
+        if request.form.get('databases'):
+            condition['databases'] = request.form.get('databases')
+        else:
+            condition['databases'] = []
+        if request.form.get('keywords'):
+            condition['keywords'] = request.form.get('keywords')
+        else:
+            condition['keywords'] = []
 
-    if condition is None:
+        pagination_num_per = int(request.form.get('pagination_num_per'))
+
+    if not condition:
         condition = {'start': '',
                      'end': '',
                      'databases': [],
@@ -82,8 +99,8 @@ def task(
     box = finisher.FBoxM(data=data_sorted)
     box.run_box()
     box_ = {
-        'maxtime': box.maxtime,
-        'mintime': box.mintime,
+        'maxtime': int(box.maxtime),
+        'mintime': int(box.mintime),
         'databases': box.databases,
         'keywords': box.keywords
     }
