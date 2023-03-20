@@ -53,10 +53,27 @@ def task(
     uid = uid
 
     if request.method == 'POST':
-        condition = request.form['condition']
-        pagination_num_per = request.form['pagination_num_per']
+        condition = dict()
+        if request.form.get('starttime'):
+            condition['start'] = request.form.get('starttime')
+        else:
+            condition['start'] = ''
+        if request.form.get('endtime'):
+            condition['end'] = request.form.get('endtime')
+        else:
+            condition['end'] = ''
+        if request.form.get('databases'):
+            condition['databases'] = request.form.get('databases')
+        else:
+            condition['databases'] = []
+        if request.form.get('keywords'):
+            condition['keywords'] = request.form.get('keywords')
+        else:
+            condition['keywords'] = []
 
-    if condition is None:
+        pagination_num_per = int(request.form.get('pagination_num_per'))
+
+    if not condition:
         condition = {'start': '',
                      'end': '',
                      'databases': [],
@@ -79,13 +96,13 @@ def task(
 
     data_sorted = [data_imported[acc] for acc in acc_sorted]
 
-    am = finisher.FBoxM(data=data_sorted)
-    am.run_box()
-    am_ = {
-        'maxtime': am.maxtime,
-        'mintime': am.mintime,
-        'databases': am.databases,
-        'keywords': am.keywords
+    box = finisher.FBoxM(data=data_sorted)
+    box.run_box()
+    box_ = {
+        'maxtime': int(box.maxtime),
+        'mintime': int(box.mintime),
+        'databases': box.databases,
+        'keywords': box.keywords
     }
 
     pagination_num_per = pagination_num_per
@@ -100,7 +117,7 @@ def task(
                                datasets=this_page_data,
                                pagination_num=pagination_num,
                                page=page,
-                               am=am_)
+                               box=box_)
     else:
         configs = "This task is empty."
         return redirect(url_for('empty', configs=configs))
@@ -129,9 +146,12 @@ def page_not_found(*args):
     return render_template('404.html'), 404
 
 
-@app.route('/test')
+@app.route('/test', methods=['GET', 'POST'])
 def test():
-    return render_template('test.html')
+    if request.method == 'POST':
+        u = request.form.get('aaa')
+        return render_template('test2.html', u=u)
+    return render_template('test2.html')
 
 
 def choose_page(groups):
