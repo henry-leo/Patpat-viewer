@@ -21,7 +21,7 @@
     <nav class="navbar navbar-expand-lg border-bottom">
         <div class="container-fluid">
             <a class="navbar-brand fs-3" href="/">
-                    <img src="/static/Patpat LOGO.png" style="height: 70px" alt="front cover">
+                <img src="/static/Patpat LOGO.png" style="height: 70px" alt="front cover">
             </a>
             <div class="dropdown">
                 <a class="btn btn-outline-secondary dropdown-toggle" role="button" data-bs-toggle="dropdown"
@@ -105,35 +105,33 @@
 {% block content %}
 <!-- Your page content -->
 {% endblock %}
-<div class="page-wrapper" style="background: #f8f9fa">
-    <footer class="footer">
-        <div class="container">
-            <div class="row text-center align-items-center">
-                <div class="col-lg-auto">
-                    <ul class="list-inline list-inline-dots">
-                        <li class="list-inline-item">
-                            <a href="https://github.com/henry-leo/Patpat/wiki" class="link-secondary text-decoration-none" target="_blank">
-                                Documentation
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="https://github.com/henry-leo/Patpat-viewer/blob/master/LICENSE" class="link-secondary text-decoration-none" target="_blank">
-                                License
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="https://github.com/henry-leo/Patpat-viewer"
-                               class="link-secondary text-decoration-none" target="_blank">
-                                Source code
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+<footer class="footer">
+    <div class="container">
+        <div class="d-inline-flex row p-3">
+            <div class="col">
+                <a href="https://github.com/henry-leo/Patpat/wiki"
+                   class="link-secondary text-decoration-none text-nowrap" target="_blank">
+                    Documentation
+                </a>
             </div>
-        </div>
+            <div class="col">
+                <a href="https://github.com/henry-leo/Patpat-viewer/blob/master/LICENSE"
+                   class="link-secondary text-decoration-none text-nowrap" target="_blank">
+                    License
+                </a>
+            </div>
+            <div class="col">
+                <a href="https://github.com/henry-leo/Patpat-viewer"
+                   class="link-secondary text-decoration-none text-nowrap" target="_blank">
+                    Source code
+                </a>
+            </div>
 
-    </footer>
-</div>
+        </div>
+    </div>
+
+</footer>
+
 {% block scripts %}
 <!-- Optional JavaScript -->
 {{ bootstrap.load_js() }}

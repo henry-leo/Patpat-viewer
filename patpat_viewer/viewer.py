@@ -54,6 +54,8 @@ def task(
 
     if request.method == 'POST':
         condition = dict()
+
+        # 从表单获取时间
         if request.form.get('starttime'):
             condition['start'] = request.form.get('starttime')
         else:
@@ -62,14 +64,20 @@ def task(
             condition['end'] = request.form.get('endtime')
         else:
             condition['end'] = ''
-        if request.form.get('databases'):
-            condition['databases'] = request.form.get('databases')
-        else:
-            condition['databases'] = []
-        if request.form.get('keywords'):
-            condition['keywords'] = request.form.get('keywords')
-        else:
-            condition['keywords'] = []
+
+        # 从表单获取数据来源
+        condition['databases'] = []
+        if request.form:
+            for k in request.form.keys():
+                if 'database' in k:
+                    condition['databases'].extend([request.form.get(k)])
+
+        # 从表单获取关键词
+        condition['keywords'] = []
+        if request.form:
+            for k in request.form.keys():
+                if 'keyword' in k:
+                    condition['keywords'].extend([request.form.get(k)])
 
         pagination_num_per = int(request.form.get('pagination_num_per'))
 
@@ -102,7 +110,7 @@ def task(
         'maxtime': int(box.maxtime),
         'mintime': int(box.mintime),
         'databases': box.databases,
-        'keywords': box.keywords
+        'keywords': sorted(box.keywords)
     }
 
     pagination_num_per = pagination_num_per
@@ -149,9 +157,13 @@ def page_not_found(*args):
 @app.route('/test', methods=['GET', 'POST'])
 def test():
     if request.method == 'POST':
-        u = request.form.get('aaa')
-        return render_template('test2.html', u=u)
-    return render_template('test2.html')
+        n = 0
+        t = []
+        for i in range(1, 4):
+            t.extend(request.form.get(f'database-{i}'))
+        return render_template('test3.html', t=t)
+
+    return render_template('test3.html')
 
 
 def choose_page(groups):
@@ -164,6 +176,3 @@ def choose_page(groups):
 
     this_page_data = groups[page - 1]
     return this_page_data, pagination_num, page
-
-
-
