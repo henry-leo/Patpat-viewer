@@ -34,7 +34,7 @@
                                     <label for="startYearSelect"></label>
                                     <select class="fw-light" style="min-height:16px"
                                             id="startYearSelect" name="starttime">
-                                        <option value="">None</option>
+                                        <option value="">--</option>
                                         {% for y in range(box['mintime'], box['maxtime']+1) %}
                                         <option value="{{ y }}">{{ y }}</option>
                                         {% endfor %}
@@ -47,7 +47,7 @@
                                     <label for="endYearSelect"></label>
                                     <select class="fw-light" style="min-height:16px"
                                             id="endYearSelect" name="endtime">
-                                        <option value="">None</option>
+                                        <option value="">--</option>
                                         {% for y in range(box['mintime'], box['maxtime']+1) %}
                                         <option value="{{ y }}">{{ y }}</option>
                                         {% endfor %}
